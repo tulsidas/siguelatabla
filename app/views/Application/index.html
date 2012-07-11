@@ -1,0 +1,60 @@
+#{extends 'main.html' /}
+#{set title: 'Sigue la tabla' /}
+
+#{list models.Pais.values()}
+	#{if _ == pais}
+		<strong>${_.nombre}</strong>
+	#{/if}
+	#{else}
+		#{a @Application.index(_, liga.id, torneo.id, fecha)}
+			${_.nombre}
+		#{/a}
+	#{/else}
+	&middot; 
+#{/list}
+<hr/>
+
+#{list ligas}
+	#{if _ == liga}
+		<strong>${_}</strong>
+	#{/if}
+	#{else} 
+		#{a @Application.index(pais, _.id, torneo.id, fecha)}
+			${_}
+		#{/a}
+	#{/else}
+	&middot; 
+#{/list}
+<hr/>
+
+#{list torneos}
+	#{if _ == torneo}
+		<strong>${_}</strong>
+	#{/if}
+	#{else} 
+		#{a @Application.index(pais, liga.id, _.id, fecha)}
+			${_}
+		#{/a}
+	#{/else}
+	&middot; 
+#{/list}
+
+<hr/>
+#{if fecha > 1}
+	#{a @Application.index(pais, liga.id, torneo.id, fecha - 1)}prev#{/a}
+#{/if}
+ Fecha ${fecha} / ${torneo.fechas}
+#{if fecha < torneo.fechas}
+	#{a @Application.index(pais, liga.id, torneo.id, fecha + 1)}next#{/a}
+#{/if}
+<br/>
+<table>
+#{list partidos, as: 'p'}
+	<tr>
+		<td class="${p.confirmado ? 'confirmed' : 'unconfirmed'}">${p.local}</td>
+		<td class="${p.confirmado ? 'confirmed' : 'unconfirmed'}">${p.golesLocal}</td>
+		<td class="${p.confirmado ? 'confirmed' : 'unconfirmed'}">${p.golesVisitante}</td>
+		<td class="${p.confirmado ? 'confirmed' : 'unconfirmed'}">${p.visitante}</td>
+	</tr>
+#{/list}
+</table>

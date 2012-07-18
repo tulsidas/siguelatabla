@@ -1,12 +1,244 @@
 #{extends 'main.html' /}
 #{set title: 'Sigue la tabla' /}
 
+#{set 'moreStyles'}
+  <link rel="stylesheet" media="screen" href="@{'/public/stylesheets/jquery.dataTables.css'}">
+  <link rel="stylesheet" media="screen" href="@{'/public/stylesheets/demo_table.css'}">
+#{/set}
+
+#{set 'moreScripts'}
+	<script src="@{'/public/javascripts/jquery.dataTables.min.js'}" type="text/javascript" charset="UTF-8"></script>
+	<script src="@{'/public/javascripts/jquery.jeditable.mini.js'}" type="text/javascript" charset="UTF-8"></script>
+	<script type="text/javascript" charset="utf8">
+		var partidos = [];
+		#{list partidos, as: 'p'}
+			partidos.push({
+				"cuando": "${p.cuando.format('d/M/yy', 'es')}",
+				"local": "${p.local.nombre}",
+				"local_id": ${p.local.id},
+				"visitante": "${p.visitante.nombre}",
+				"visitante_id": ${p.visitante.id},
+				"golesLocal": ${p.golesLocal},
+				"golesVisitante": ${p.golesVisitante},
+				"confirmado": ${p.confirmado},
+				"modificado": false, // por el usuario
+				"fecha": ${p.fecha}
+			});
+		#{/list}
+		
+		var equipos = [];
+		#{list torneo.equipos, as: 'e'}
+			equipos.push({
+				"id"			:	${e.id},
+				"nombre"	: "${e.nombre}",
+				"puntos"	: ${e.puntosDescenso},
+				"jugados"	: ${e.jugadosDescenso}
+			});
+		#{/list}
+
+		function calcularTabla(partidos) {
+			var equipos = _.uniq(_.pluck(partidos, 'local').concat(_.pluck(partidos, 'visitante')));
+
+			filas = {};
+			_.each(equipos, function(e) {
+				filas[e] = {
+					"puntos"		: 0,
+					"jugados"		: 0,
+					"ganados"		: 0,
+					"empatados"	: 0,
+					"perdidos"	: 0,
+					"aFavor"		: 0,
+					"enContra"	: 0,
+					"promedio"	: 0
+				};
+			});
+			
+			var confirmados = _.filter(partidos, function(p) { return p.confirmado || p.modificado; });
+			
+			_.each(confirmados, function(p) {
+				// goles
+				filas[p.local].aFavor += p.golesLocal;
+				filas[p.local].enContra += p.golesVisitante;
+				filas[p.visitante].aFavor += p.golesVisitante;
+				filas[p.visitante].enContra += p.golesLocal;
+				
+				if (p.golesLocal == p.golesVisitante) {
+					filas[p.local].puntos += 1;
+					filas[p.local].jugados += 1;
+					filas[p.local].empatados += 1;
+
+					filas[p.visitante].puntos += 1;
+					filas[p.visitante].jugados += 1;
+					filas[p.visitante].empatados += 1;
+				}
+				else if (p.golesLocal > p.golesVisitante) {
+					filas[p.local].puntos += 3;
+					filas[p.local].jugados += 1;
+					filas[p.local].ganados += 1;
+
+					filas[p.visitante].puntos += 0;
+					filas[p.visitante].jugados += 1;
+					filas[p.visitante].perdidos += 1;
+				}
+				else if (p.golesLocal < p.golesVisitante) {
+					filas[p.local].puntos += 0;
+					filas[p.local].jugados += 1;
+					filas[p.local].perdidos += 1;
+
+					filas[p.visitante].puntos += 3;
+					filas[p.visitante].jugados += 1;
+					filas[p.visitante].ganados += 1;
+				}
+			});
+
+			_.sortBy(filas, function(f) { return f.puntos*1000 + (f.aFavor - f.enContra); });
+			
+			var ret = 
+				_.map(filas, function(row, equipo) {
+					return [
+						equipo, row.puntos, row.jugados, row.ganados, row.empatados, row.perdidos, 
+						row.aFavor, row.enContra, row.aFavor-row.enContra, row.promedio
+					];
+				})
+				
+			return ret;
+		}
+		
+		function partidosDeLaFecha(fecha) {
+			return _.filter(partidos, function(p) { return p.fecha == fecha; });
+		}
+		
+		function mostrarPartidos(fecha) {
+			return _.map(partidosDeLaFecha(fecha), function(p) {
+				// return [p.local_id, p.local, p.golesLocal, p.golesVisitante, p.visitante_id, p.visitante, p.cuando];
+				return {
+					"local_id"				:	p.local_id, 
+					"local"						: p.local,
+					"golesLocal"			: p.golesLocal,
+					"golesVisitante"	: p.golesVisitante,
+					"visitante_id"		: p.visitante_id,
+					"visitante"				: p.visitante,
+					"cuando"					: p.cuando
+				};
+			});
+		}
+
+		// quien = L|V
+		function updateTable(local_id, visitante_id, quien, goles) {
+			var fila = _.find(partidos, function(fila) {
+				return fila.local_id == local_id && fila.visitante_id == visitante_id;
+			});
+
+			if (quien == 'L') {
+				fila.golesLocal = goles;
+			}
+			else {
+				fila.golesVisitante = goles;
+			}
+
+			fila.modificado = true;
+			
+			var dt = $('#tabla').dataTable();
+			dt.fnClearTable();
+			dt.fnAddData(calcularTabla(partidos));
+		}
+		
+		var fecha = ${torneo.fecha};
+		var fechas = ${torneo.fechas};
+
+		function prevFecha() { cambiarFecha(-1); };
+		function nextFecha() { cambiarFecha(1); };
+		
+		function createdRow (nRow, aData, iDataIndex) {
+			console.log("createdRow");
+
+			var tds = $(nRow).find("td");
+			
+			$(tds[1]).addClass("editable");
+			$(tds[1]).attr("id", aData.local_id + "_" + aData.visitante_id + "_L");
+			$(tds[2]).attr("id", aData.local_id + "_" + aData.visitante_id + "_V");
+			$(tds[2]).addClass("editable");
+		}
+		
+		function initComplete() {
+			console.log("initComplete");
+
+			$('.editable').editable(
+				function(value, settings) {
+					var split = this.id.split('_');
+					updateTable(split[0], split[1], split[2], parseInt(value));
+		
+			    return value;
+				},
+				{ 
+			    type    : 'select',
+					submit	: "ok",
+					data		: "{'0':'0', '1':'1', '2':'2', '3':'3', '4':'4', '5':'5', '6':'6', '7':'7', '8':'8', '9':'9'}"
+				}
+			);
+		}
+
+		function cambiarFecha(d) {
+			if (fecha + d > 0 && fecha + d <= fechas) {
+				fecha += d;
+				$('#fecha').text(fecha);
+
+				var dt = $('#partidos').dataTable({
+					"bRetrieve": true,
+					"fnCreatedRow": createdRow,
+				});
+  			dt.fnClearTable();
+  			dt.fnAddData(mostrarPartidos(fecha));
+  			initComplete();
+			}
+		}
+
+		$(document).ready(function() {
+	    $('#tabla').dataTable(
+	    	{
+	    		"bFilter": false,
+	    		"bInfo": false,
+	    		"bPaginate": false,
+	    		"bAutoWidth": false,
+	    		"bSaveState": false,
+	    		"bSort": true,
+	    		"bSortClasses": false,
+	    		"aaSorting": [ [1, 'desc'], [8, 'desc'] ],
+	    		"aaData": calcularTabla(partidos)
+    		}
+	    );
+	    
+	    $('#partidos').dataTable({
+    		"bFilter": false,
+    		"bInfo": false,
+    		"bPaginate": false,
+    		"bSaveState": false,
+    		"bSort": false,
+    		"fnCreatedRow": createdRow,
+   			"fnInitComplete": initComplete,
+    		"aaData": mostrarPartidos(${torneo.fecha}),
+				"aoColumns": [
+				  { "mDataProp": "local" },
+				  { "mDataProp": "golesLocal" },
+				  { "mDataProp": "golesVisitante" },
+				  { "mDataProp": "visitante" },
+				  { "mDataProp": "cuando" }
+					] 
+			});
+	    
+			// botones para avanzar y retroceder de fecha
+			$('#prev').click(prevFecha);
+			$('#next').click(nextFecha);
+		});
+	</script>
+#{/set}
+
 #{list models.Pais.values()}
 	#{if _ == pais}
 		<strong>${_.nombre}</strong>
 	#{/if}
 	#{else}
-		#{a @Application.index(_, liga.id, torneo.id, fecha)}
+		#{a @Application.index(_, liga.id, torneo.id)}
 			${_.nombre}
 		#{/a}
 	#{/else}
@@ -19,7 +251,7 @@
 		<strong>${_}</strong>
 	#{/if}
 	#{else} 
-		#{a @Application.index(pais, _.id, torneo.id, fecha)}
+		#{a @Application.index(pais, _.id, torneo.id)}
 			${_}
 		#{/a}
 	#{/else}
@@ -32,29 +264,63 @@
 		<strong>${_}</strong>
 	#{/if}
 	#{else} 
-		#{a @Application.index(pais, liga.id, _.id, fecha)}
+		#{a @Application.index(pais, liga.id, _.id)}
 			${_}
 		#{/a}
 	#{/else}
 	&middot; 
 #{/list}
+<hr/>
+
+#{list torneo.equipos}
+	<a href="#">
+		${_}
+	</a>
+	&middot; 
+#{/list}
+<hr/>
+
+*{ -------------------------------------------------------------------------------- }*
+
+<input type="button" id="prev" value="&larr;" />
+Fecha <span id="fecha">${torneo.fecha}</span> / ${torneo.fechas}
+<input type="button" id="next" value="&rarr;" />
+
+<br/>
+<table cellpadding="5" id="partidos">
+	<thead>
+		<tr>
+			<th>local</th>
+			<th>goles local</th>
+			<th>goles visitante</th>
+			<th>visitante</th>
+			<th>fecha</th>
+		</tr>
+	</thead>
+	<tbody>
+	</tbody>
+</table>
+
+<table cellpadding="10" id="tabla">
+	<thead>
+		<tr>
+			<th>&nbsp;</th>
+			<th>pts</th>
+			<th>PJ</th>
+			<th>PG</th>
+			<th>PE</th>
+			<th>PP</th>
+			<th>GF</th>
+			<th>GC</th>
+			<th>DG</th>
+			<th>Prom</th>
+		</tr>
+	</thead>
+	<tbody>
+	</tbody>
+</table>
 
 <hr/>
-#{if fecha > 1}
-	#{a @Application.index(pais, liga.id, torneo.id, fecha - 1)}prev#{/a}
-#{/if}
- Fecha ${fecha} / ${torneo.fechas}
-#{if fecha < torneo.fechas}
-	#{a @Application.index(pais, liga.id, torneo.id, fecha + 1)}next#{/a}
-#{/if}
-<br/>
-<table>
-#{list partidos, as: 'p'}
-	<tr>
-		<td class="${p.confirmado ? 'confirmed' : 'unconfirmed'}">${p.local}</td>
-		<td class="${p.confirmado ? 'confirmed' : 'unconfirmed'}">${p.golesLocal}</td>
-		<td class="${p.confirmado ? 'confirmed' : 'unconfirmed'}">${p.golesVisitante}</td>
-		<td class="${p.confirmado ? 'confirmed' : 'unconfirmed'}">${p.visitante}</td>
-	</tr>
-#{/list}
-</table>
+
+<ul>
+</ul>

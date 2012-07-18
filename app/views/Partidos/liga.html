@@ -1,0 +1,7 @@
+#{extends 'main.html' /}
+#{set title: 'Alta Partido' /}
+
+#{form @Partidos.torneo(), method:'POST'}
+	#{select 'ligaId', items: ligas /}
+	<input type="submit" value="&rarr;" />
+#{/form}

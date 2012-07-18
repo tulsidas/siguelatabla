@@ -32,6 +32,10 @@ public class Partido extends Model {
    @ManyToOne
    public Torneo torneo;
 
+   // @Required
+   // @ManyToOne(optional = false)
+   // public Estadio estadio;
+
    public int golesLocal;
 
    public int golesVisitante;
@@ -41,4 +45,9 @@ public class Partido extends Model {
    // a qué fecha (número de partido dentro del torneo) corresponde
    @Required
    public int fecha;
+
+   @Override
+   public String toString() {
+      return "Fecha " + fecha + " - " + local + " vs " + visitante;
+   }
 }

@@ -1,0 +1,7 @@
+#{extends 'main.html' /}
+#{set title: 'Alta Partido' /}
+
+#{form @Partidos.liga(), method:'POST'}
+#{select 'pais', items: paises, valueProperty: 'ISO' /}
+<input type="submit" value="&rarr;" />
+#{/form}

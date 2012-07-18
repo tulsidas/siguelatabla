@@ -5,14 +5,18 @@
 # Home page
 GET     /                                       Application.index
 
-# CRUD
-*				/admin																	module:crud
+# Secure
+*      	/admin                									module:secure
+*     	/admin           												module:crud
+
+GET			/admin/partidos/pais										Partidos.pais
+POST		/admin/partidos/liga										Partidos.liga
+POST		/admin/partidos/torneo									Partidos.torneo
+GET			/admin/partidos/alta										Partidos.alta
+POST		/admin/partidos/doAlta									Partidos.doAlta
 
 # Ignore favicon requests
 GET     /favicon.ico                            404
 
 # Map static resources from the /app/public folder to the /public path
 GET     /public/                                staticDir:public
-
-# Catch all
-# *       /{controller}/{action}                  {controller}.{action}

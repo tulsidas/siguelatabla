@@ -5,11 +5,15 @@ import play.mvc.*;
 
 import java.util.*;
 
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
+import com.google.common.collect.Sets;
+
 import models.*;
 
 public class Application extends Controller {
 
-   public static void index(Pais pais, Long ligaId, Long torneoId, Integer fecha) {
+   public static void index(Pais pais, Long ligaId, Long torneoId) {
       if (pais == null) {
          pais = Pais.AR;
       }
@@ -28,13 +32,14 @@ public class Application extends Controller {
          torneo = Torneo.findById(torneoId);
       }
 
-      if (fecha == null || fecha < 1 || fecha > torneo.fechas) {
-         fecha = torneo.fecha; // la ultima
-      }
+      // TODO optimizar y traer en 1 query equipos y estadios
+      // List<Partido> partidos = Partido.find("byTorneoAndFecha", torneo, fecha).fetch();
+      List<Partido> partidos = Partido.find("byTorneo", torneo).fetch();
 
-      List<Partido> partidos = Partido.find("byTorneoAndFecha", torneo, fecha).fetch();
-
-      render(pais, ligas, liga, torneos, torneo, partidos, fecha);
+      render(pais, ligas, liga, torneos, torneo, partidos);
    }
-
 }
+
+// TODO mostrar los cambios hechos por el usuario y que pueda deshacerlos (boton X por ej)
+// TODO mostrar cuando un cambio cambia la tabla (animacion de equipo subiendo / bajando)
+// TODO promedio

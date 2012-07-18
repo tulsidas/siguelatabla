@@ -3,9 +3,13 @@ package models;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 
+import play.data.validation.Min;
 import play.data.validation.Required;
 import play.db.jpa.Model;
 
@@ -19,14 +23,19 @@ public class Torneo extends Model {
    @ManyToOne
    public Liga liga;
 
-   // @OneToMany
-   // public List<Equipo> equipos;
+   @ManyToMany(mappedBy = "torneos", fetch = FetchType.LAZY)
+   @OrderBy("nombre")
+   public List<Equipo> equipos;
+
+   @OneToMany(mappedBy = "torneo", fetch = FetchType.LAZY)
+   public List<Partido> partidos;
 
    // cuantas fechas tiene este torneo
    @Required
+   @Min(1)
    public int fechas;
 
-   // la proxima fecha
+   // la fecha actual
    @Required
    public int fecha;
 

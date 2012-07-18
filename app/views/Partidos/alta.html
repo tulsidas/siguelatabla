@@ -1,0 +1,33 @@
+#{extends 'main.html' /}
+#{set title: 'Alta Partido' /}
+
+#{set 'moreStyles'}
+  <link rel="stylesheet" media="screen" href="@{'/public/stylesheets/jquery-ui-1.8.21.custom.css'}">
+#{/set}
+
+#{set 'moreScripts'}
+	<script src="@{'/public/javascripts/jquery-ui-1.8.21.custom.min.js'}" type="text/javascript" charset="UTF-8"></script>
+	<script type="text/javascript" charset="utf8">
+		$(document).ready(function() {
+			$("#cuando").datepicker({ dateFormat: "dd/mm/yy" });
+		});
+	</script>
+#{/set}
+
+#{ifErrors}
+   <h1>Oops…</h1>
+   #{errors}
+       <li>${error}</li>
+   #{/errors}
+   <hr/>
+#{/ifErrors}
+
+#{form @Partidos.doAlta(), method:'POST'}
+	Cuando: <input type="text" id="cuando" name="cuando"><br/>
+	Local: #{select 'localId', items: torneo.equipos, value: flash.localId /}<br/>
+	Visitante: #{select 'visitanteId', items: torneo.equipos, value: flash.visitanteId /}<br/>
+	*{ Estadio: #{select 'estadioId', items: estadios, value: flash.estadioId /}<br/> }*
+	Fecha: <input type="text" name="fecha"><br/>
+	<input type="hidden" name="torneoId" value="${torneo.id}" />
+	<input type="submit" value="ok" />
+#{/form}

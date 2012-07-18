@@ -1,0 +1,7 @@
+#{extends 'main.html' /}
+#{set title: 'Alta Partido' /}
+
+#{form @Partidos.alta(), method:'GET'}
+#{select 'torneoId', items: torneos /}
+<input type="submit" value="&rarr;" />
+#{/form}

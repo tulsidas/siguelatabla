@@ -2,6 +2,8 @@ package controllers;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import models.Equipo;
 import models.Liga;
@@ -13,6 +15,7 @@ import play.mvc.Controller;
 import play.mvc.With;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 
 @With(Secure.class)
 public class Partidos extends Controller {
@@ -43,8 +46,9 @@ public class Partidos extends Controller {
       if (torneo == null) {
          notFound();
       }
-      
-//      List<Estadio> estadios = Estadio.find("byPais", torneo.liga.pais).fetch();
+
+      // List<Estadio> estadios = Estadio.find("byPais",
+      // torneo.liga.pais).fetch();
 
       render(torneo/*, estadios*/);
    }
@@ -84,8 +88,45 @@ public class Partidos extends Controller {
       p.golesVisitante = 0;
       p.confirmado = false;
       p.save();
-      
+
       // flash.success("partido grabado");
       alta(torneoId);
+   }
+
+   public static void confirmar(long torneoId, int fecha) {
+      Torneo torneo = Torneo.findById(torneoId);
+
+      List<Partido> partidos = Partido.find("byTorneoAndFecha", torneo, fecha).fetch();
+
+      render(partidos, torneo, fecha);
+   }
+
+   public static void doConfirmar(long torneoId, int fecha) {
+      Map<String, String> results = params.allSimple();
+
+      Set<Long> pids = Sets.newHashSet();
+
+      for (String key : results.keySet()) {
+         if (key.endsWith("_L") || key.endsWith("_V")) {
+            pids.add(Long.parseLong(key.split("_")[0]));
+         }
+      }
+
+      for (long pid : pids) {
+         try {
+            int golesLocal = Integer.parseInt(results.get(pid + "_L"));
+            int golesVisitante = Integer.parseInt(results.get(pid + "_V"));
+            
+            Partido p = Partido.findById(pid);
+            
+            p.golesLocal = golesLocal;
+            p.golesVisitante = golesVisitante;
+            p.confirmado = true;
+            p.save();
+         }
+         catch (Exception e) {}
+      }
+
+      confirmar(torneoId, fecha);
    }
 }

@@ -1,0 +1,24 @@
+#{extends 'main.html' /}
+#{set title: 'Confirmacion Partido' /}
+
+#{form @Partidos.doConfirmar(), method:'POST'}
+<table cellpadding="10" border="1">
+#{list partidos, as: 'p'}
+	<tr>
+		<td>${p.local}</td>
+		<td><input type="text" name="${p.id}_L" size="1" value="${ p.confirmado ? p.golesLocal : "" }" /></td>
+		<td><input type="text" name="${p.id}_V" size="1" value="${ p.confirmado ? p.golesVisitante : "" }" /></td>
+		<td>${p.visitante}</td>
+	</tr>
+#{/list}
+</table>
+#{if fecha > 1}
+	#{a @Partidos.confirmar(torneo.id, fecha - 1)}&larr;#{/a}
+#{/if}
+<input type="hidden" name="torneoId" value="${torneo.id}" />
+<input type="hidden" name="fecha" value="${fecha}" />
+<input type="submit" />
+#{if fecha < torneo.fechas}
+	#{a @Partidos.confirmar(torneo.id, fecha + 1)}&rarr;#{/a}
+#{/if}
+#{/form}

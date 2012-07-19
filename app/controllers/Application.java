@@ -41,3 +41,4 @@ public class Application extends Controller {
 }
 
 // TODO mostrar cuando un cambio cambia la tabla (animacion de equipo subiendo / bajando)
+// TODO http://backbonejs.org ?

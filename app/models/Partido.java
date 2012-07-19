@@ -1,6 +1,7 @@
 package models;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -49,5 +50,15 @@ public class Partido extends Model {
    @Override
    public String toString() {
       return "Fecha " + fecha + " - " + local + " vs " + visitante;
+   }
+
+   /**
+    * con join fetch de equipos y estadios
+    */
+   public static List<Partido> byTorneo(Torneo t) {
+      return em()
+            .createQuery("from Partido p join fetch p.torneo where p.torneo = :torneo",
+                  Partido.class).setParameter("torneo", t).getResultList();
+      //  t join fetch t.equipos where p.torneo = :torneo
    }
 }

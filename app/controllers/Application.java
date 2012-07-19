@@ -20,7 +20,7 @@ public class Application extends Controller {
 
       List<Liga> ligas = Liga.find("byPais", pais).fetch();
 
-      Liga liga = ligas.get(0);
+      Liga liga = ligas.get(0); // agarro cualquiera
       if (ligaId != null) {
          liga = Liga.findById(ligaId);
       }
@@ -33,13 +33,11 @@ public class Application extends Controller {
       }
 
       // TODO optimizar y traer en 1 query equipos y estadios
-      // List<Partido> partidos = Partido.find("byTorneoAndFecha", torneo, fecha).fetch();
       List<Partido> partidos = Partido.find("byTorneo", torneo).fetch();
+      // List<Partido> partidos = Partido.byTorneo(torneo);
 
       render(pais, ligas, liga, torneos, torneo, partidos);
    }
 }
 
-// TODO mostrar los cambios hechos por el usuario y que pueda deshacerlos (boton X por ej)
 // TODO mostrar cuando un cambio cambia la tabla (animacion de equipo subiendo / bajando)
-// TODO promedio

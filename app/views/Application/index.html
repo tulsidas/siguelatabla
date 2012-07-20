@@ -59,12 +59,14 @@
 			var confirmados = _.filter(partidos, function(p) { return p.confirmado; });
 
 			var mods = [];
+
+			// los partidos confirmados (y sus modificaciones)
 			_.each(confirmados, function(_pc) {
 				var pc = _.clone(_pc);
 				var mod = modById(pc.id);
 				
 				// merge de lo confirmado y la modificacion
-				if (mod) {
+				if (!_.isUndefined(mod)) {
 					if (!_.isUndefined(mod.golesLocal)) {
 						pc.golesLocal = mod.golesLocal;
 					}
@@ -78,9 +80,9 @@
 			
 			// las modificaciones de la nada (que no se aplican sobre un partido confirmado)
 			_.each(modificaciones, function(mod) {
-				var current = modById(mod.id);
+				var currentMod = _.find(mods, function(m) { return m.id == mod.id; });
 				
-				if (current) {
+				if (_.isUndefined(currentMod)) { // no hay mod sobre partido para esta mod
 					if (_.isUndefined(mod.golesLocal)) {
 						mod.golesLocal = 0;
 					}
@@ -91,7 +93,7 @@
 					mods.push(mod);
 				}
 			});
-			
+
 			_.each(mods, function(p) {
 				// goles
 				filas[p.local_id].aFavor += p.golesLocal;

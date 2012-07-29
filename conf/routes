@@ -9,6 +9,9 @@ GET     /                                       Application.index
 *      	/admin                									module:secure
 *     	/admin           												module:crud
 
+GET			/equipos/																Application.equipo
+
+
 GET			/admin/partidos/pais										Partidos.pais
 POST		/admin/partidos/liga										Partidos.liga
 POST		/admin/partidos/torneo									Partidos.torneo

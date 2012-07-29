@@ -1,0 +1,63 @@
+#{extends 'main.html' /}
+#{set title: 'Sigue la tabla' /}
+
+#{set 'moreStyles'}
+  <link rel="stylesheet" media="screen" href="@{'/public/stylesheets/jquery.dataTables.css'}">
+  <link rel="stylesheet" media="screen" href="@{'/public/stylesheets/demo_table.css'}">
+#{/set}
+
+#{set 'moreScripts'}
+	<script src="@{'/public/javascripts/jquery.dataTables.min.js'}" type="text/javascript" charset="UTF-8"></script>
+	<script type="text/javascript" charset="utf8">
+		$(document).ready(function() {
+	    $('#partidos').dataTable(
+	    	{
+	    		"bFilter": false,
+	    		"bInfo": false,
+	    		"bPaginate": false,
+	    		"bAutoWidth": false,
+	    		"bSaveState": false,
+	    		"bSort": false,
+	    		"bSortClasses": false,
+    		}
+	    );
+    });
+	</script>
+#{/set}
+
+#{list torneo.equipos}
+	#{if _ != equipo}
+	#{a @Application.equipo(_.id, torneo.id)}
+		${_}
+	#{/a}
+	#{/if}
+	#{else}
+		<strong>${_}</strong>
+	#{/else}
+	&middot; 
+#{/list}
+<hr/>
+<hr/>
+
+<table cellpadding="5" id="partidos">
+	<thead>
+		<tr>
+			<th>vs</th>
+			<th>a favor</th>
+			<th>en contra</th>
+			<th>&nbsp;</th>
+			<th>fecha</th>
+		</tr>
+	</thead>
+	<tbody>
+	#{list partidos}
+		<tr>
+			<td>${_.local == equipo ? _.visitante : _.local}</td>
+			<td>${_.local == equipo ? _.golesLocal : _.golesVisitante}</td>
+			<td>${_.local == equipo ? _.golesVisitante : _.golesLocal}</td>
+			<td>${_.local == equipo ? "local" : "visitante"}</td>
+			<td>${_.fecha} | ${_.cuando.format('d MMM yy', 'es')}</td>
+		</tr>
+	#{/list}
+	</tbody>
+</table>

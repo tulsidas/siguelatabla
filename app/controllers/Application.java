@@ -32,13 +32,29 @@ public class Application extends Controller {
          torneo = Torneo.findById(torneoId);
       }
 
-      // TODO optimizar y traer en 1 query equipos y estadios
       List<Partido> partidos = Partido.find("byTorneo", torneo).fetch();
-      // List<Partido> partidos = Partido.byTorneo(torneo);
 
       render(pais, ligas, liga, torneos, torneo, partidos);
    }
+
+   public static void equipo(Long equipoId, Long torneoId) {
+      if (equipoId == null || torneoId == null) {
+         redirect("Application.index");
+      }
+
+      Torneo torneo = Torneo.findById(torneoId);
+      Equipo equipo = Equipo.findById(equipoId);
+
+      if (equipo == null || torneo == null) {
+         redirect("Application.index");
+      }
+      
+      List<Partido> partidos = equipo.getPartidos(torneo);
+
+      render(equipo, torneo, partidos);
+   }
 }
 
-// TODO mostrar cuando un cambio cambia la tabla (animacion de equipo subiendo / bajando)
+// TODO mostrar cuando un cambio cambia la tabla (animacion de equipo subiendo /
+// bajando)
 // TODO http://backbonejs.org ?

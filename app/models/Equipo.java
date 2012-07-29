@@ -25,11 +25,21 @@ public class Equipo extends Model {
 
    // descenso
    public int puntosDescenso;
+
    public int jugadosDescenso;
+
    // descenso
 
    @Override
    public String toString() {
       return nombre;
+   }
+
+   public List<Partido> getPartidos(Torneo torneo) {
+      return em()
+            .createQuery(
+                  "from Partido where torneo = :torneo and (local = :equipo or visitante = :equipo)",
+                  Partido.class).setParameter("torneo", torneo).setParameter("equipo", this)
+            .getResultList();
    }
 }

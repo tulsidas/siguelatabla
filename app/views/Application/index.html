@@ -17,7 +17,7 @@
 		#{list partidos, as: 'p'}
 			partidos.push({
 				"id"						: ${p.id},
-				"cuando"				: "${p.cuando.format('d/M/yy', 'es')}",
+				"cuando"				: "${p.cuando.format('d MMM yy', 'es')}",
 				"local"					: "${p.local.nombre}",
 				"local_id"			: ${p.local.id},
 				"visitante"			: "${p.visitante.nombre}",
@@ -229,15 +229,6 @@
 				dt.fnClearTable();
 				dt.fnAddData(calcularTabla());
 
-/*
-				console.log("mod");
-				console.log(mod);
-				console.log("partido");
-				console.log(partido);
-				console.log("modificaciones");
-				console.log(modificaciones);
-*/
-
 				// cambio tabla partidos
 				$("#" + mod.id + "_L").text(partido.golesLocal);
 				$("#" + mod.id + "_V").text(partido.golesVisitante);
@@ -345,7 +336,7 @@
 		<strong>${_.nombre}</strong>
 	#{/if}
 	#{else}
-		#{a @Application.index(_, liga.id, torneo.id)}
+		#{a @Application.index(_)}
 			${_.nombre}
 		#{/a}
 	#{/else}
@@ -358,7 +349,7 @@
 		<strong>${_}</strong>
 	#{/if}
 	#{else} 
-		#{a @Application.index(pais, _.id, torneo.id)}
+		#{a @Application.index(pais, _.id)}
 			${_}
 		#{/a}
 	#{/else}
@@ -380,9 +371,9 @@
 <hr/>
 
 #{list torneo.equipos}
-	<a href="#">
+	#{a @Application.equipo(_.id, torneo.id)}
 		${_}
-	</a>
+	#{/a}
 	&middot; 
 #{/list}
 <hr/>

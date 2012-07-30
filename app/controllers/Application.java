@@ -32,7 +32,9 @@ public class Application extends Controller {
          torneo = Torneo.findById(torneoId);
       }
 
-      List<Partido> partidos = Partido.find("byTorneo", torneo).fetch();
+      List<Partido> partidos = Partido.em()
+            .createQuery("from Partido where torneo = :torneo order by cuando asc", Partido.class)
+            .setParameter("torneo", torneo).getResultList();
 
       render(pais, ligas, liga, torneos, torneo, partidos);
    }
@@ -48,7 +50,7 @@ public class Application extends Controller {
       if (equipo == null || torneo == null) {
          redirect("Application.index");
       }
-      
+
       List<Partido> partidos = equipo.getPartidos(torneo);
 
       render(equipo, torneo, partidos);
@@ -58,3 +60,9 @@ public class Application extends Controller {
 // TODO mostrar cuando un cambio cambia la tabla (animacion de equipo subiendo /
 // bajando)
 // TODO http://backbonejs.org ?
+
+// cross(cell, "equipos primera c", "nombre").cells["id"].value[0]
+
+// INSERT INTO Partido VALUES (null, false, {{cells["fecha"].value}}, 0, 0,
+// '{{cells["cuando"].value.toString("yyyy-MM-dd
+// 00:00:00")}}', {{cells["local_id"].value}}, <<torneo>>, {{cells["visitante_id"].value}});

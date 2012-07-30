@@ -1,5 +1,6 @@
 package controllers;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -112,16 +113,26 @@ public class Partidos extends Controller {
          }
       }
 
+      SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+
       for (long pid : pids) {
          try {
             int golesLocal = Integer.parseInt(results.get(pid + "_L"));
             int golesVisitante = Integer.parseInt(results.get(pid + "_V"));
-            
+            String cuando = results.get(pid + "_cuando");
+
             Partido p = Partido.findById(pid);
-            
+
             p.golesLocal = golesLocal;
             p.golesVisitante = golesVisitante;
-            p.confirmado = true;
+            p.confirmado = "on".equals(results.get(pid + "_confirmado"));
+
+            try {
+               Date d = sdf.parse(cuando);
+               p.cuando = d;
+            }
+            catch (Exception e) {}
+
             p.save();
          }
          catch (Exception e) {}

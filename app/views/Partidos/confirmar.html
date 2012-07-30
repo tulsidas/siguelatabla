@@ -1,14 +1,45 @@
 #{extends 'main.html' /}
 #{set title: 'Confirmacion Partido' /}
 
+#{set 'moreStyles'}
+  <link rel="stylesheet" media="screen" href="@{'/public/stylesheets/jquery-ui-1.8.22.custom.css'}">
+	<style>
+		/* css for timepicker */
+		.ui-timepicker-div .ui-widget-header { margin-bottom: 8px; }
+		.ui-timepicker-div dl { text-align: left; }
+		.ui-timepicker-div dl dt { height: 25px; margin-bottom: -25px; }
+		.ui-timepicker-div dl dd { margin: 0 10px 10px 65px; }
+		.ui-timepicker-div td { font-size: 90%; }
+		.ui-tpicker-grid-label { background: none; border: none; margin: 0; padding: 0; }
+	</style>
+#{/set}
+
+#{set 'moreScripts'}
+	<script src="@{'/public/javascripts/jquery-ui-1.8.22.custom.min.js'}" type="text/javascript" charset="UTF-8"></script>
+	<script src="@{'/public/javascripts/jquery-ui-timepicker-addon.js'}" type="text/javascript" charset="UTF-8"></script>
+	<script type="text/javascript" charset="utf8">
+		$(document).ready(function() {
+			$(".cuando").datetimepicker(
+				{
+					dateFormat: "dd/mm/yy",
+					timeFormat:	"hh:mm",
+					stepMinute: 5
+				}
+			);
+		});
+	</script>
+#{/set}
+
 #{form @Partidos.doConfirmar(), method:'POST'}
 <table cellpadding="10" border="1">
 #{list partidos, as: 'p'}
 	<tr>
 		<td>${p.local}</td>
-		<td><input type="text" name="${p.id}_L" size="1" value="${ p.confirmado ? p.golesLocal : "" }" /></td>
-		<td><input type="text" name="${p.id}_V" size="1" value="${ p.confirmado ? p.golesVisitante : "" }" /></td>
+		<td><input type="text" name="${p.id}_L" size="1" value="${ p.confirmado ? p.golesLocal : "0" }" /></td>
+		<td><input type="text" name="${p.id}_V" size="1" value="${ p.confirmado ? p.golesVisitante : "0" }" /></td>
 		<td>${p.visitante}</td>
+		<td><input type="text" class="cuando" name="${p.id}_cuando" size="14" value="${p.cuando.format('dd/MM/yyyy hh:mm')}" /></td>
+		<td><input type="checkbox" name="${p.id}_confirmado" ${p.confirmado ? 'checked="checked"' : ""} /></td>
 	</tr>
 #{/list}
 </table>

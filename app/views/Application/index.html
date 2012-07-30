@@ -17,7 +17,7 @@
 		#{list partidos, as: 'p'}
 			partidos.push({
 				"id"						: ${p.id},
-				"cuando"				: "${p.cuando.format('d MMM yy', 'es')}",
+				"cuando"				: "${p.cuando.format('d MMM yy, HH:mm', 'es')}",
 				"local"					: "${p.local.nombre}",
 				"local_id"			: ${p.local.id},
 				"visitante"			: "${p.visitante.nombre}",

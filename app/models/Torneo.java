@@ -41,6 +41,7 @@ public class Torneo extends Model {
 
    // la fecha actual
    @Required
+   @Min(1)
    public int fecha;
 
    @Override

@@ -14,7 +14,10 @@ import play.db.jpa.Model;
 @Entity
 public class Equipo extends Model {
    @Required
-   public String nombre;
+   public String nombre; // nombre "coloquial"
+
+   @Required
+   public String denominacion; // para cargar datos
 
    @Required
    @Enumerated(EnumType.STRING)

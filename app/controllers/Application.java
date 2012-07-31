@@ -61,8 +61,11 @@ public class Application extends Controller {
 // bajando)
 // TODO http://backbonejs.org ?
 
+// @formatter:off
+
+// INSERT INTO Equipo VALUES (null, '{{cells["nombre"].value}}', PAIS, 0, 0, '{{cells["nombre"].value}}');
+// INSERT INTO Equipo_Torneo VALUES ( LAST_INSERT_ID(), TORNEO_ID);
+
 // cross(cell, "equipos primera c", "nombre").cells["id"].value[0]
 
-// INSERT INTO Partido VALUES (null, false, {{cells["fecha"].value}}, 0, 0,
-// '{{cells["cuando"].value.toString("yyyy-MM-dd
-// 00:00:00")}}', {{cells["local_id"].value}}, <<torneo>>, {{cells["visitante_id"].value}});
+// INSERT INTO Partido VALUES (null, false, {{cells["fecha"].value}}, 0, 0, '{{cells["cuando"].value.toString("yyyy-MM-dd 00:00:00")}}', {{cells["local_id"].value}}, <<torneo>>, {{cells["visitante_id"].value}});

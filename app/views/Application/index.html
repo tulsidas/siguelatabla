@@ -336,7 +336,7 @@
 		<strong>${_.nombre}</strong>
 	#{/if}
 	#{else}
-		#{a @Application.index(_)}
+		#{a @Application.index(_.name())}
 			${_.nombre}
 		#{/a}
 	#{/else}
@@ -349,7 +349,7 @@
 		<strong>${_}</strong>
 	#{/if}
 	#{else} 
-		#{a @Application.index(pais, _.id)}
+		#{a @Application.index(pais.name(), _.id)}
 			${_}
 		#{/a}
 	#{/else}
@@ -362,7 +362,7 @@
 		<strong>${_}</strong>
 	#{/if}
 	#{else} 
-		#{a @Application.index(pais, liga.id, _.id)}
+		#{a @Application.index(pais.name(), liga.id, _.id)}
 			${_}
 		#{/a}
 	#{/else}

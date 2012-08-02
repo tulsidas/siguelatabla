@@ -1,15 +1,25 @@
 package models;
 
 public enum Pais {
-   AR("Argentina"), CL("Chile"), BO("Bolivia"), BR("Brasil"), PY("Paraguay"), 
-   UY("Uruguay"), ES("España"), IT("Italia"), DE("Alemania"), FR("Francia");
+   //@formatter:off
+   AR("Argentina"); 
+//   CL("Chile"),
+//   BO("Bolivia"),
+//   BR("Brasil"),
+//   PY("Paraguay"), 
+//   UY("Uruguay"),
+//   IT("Italia"),
+//   DE("Alemania"),
+//   FR("Francia");
+//   ES("España");
+   //@formatter:on
 
    public String nombre;
 
    private Pais(String nombre) {
       this.nombre = nombre;
    }
-   
+
    public String getISO() {
       return name();
    }

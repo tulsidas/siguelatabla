@@ -3,13 +3,11 @@
 
 #{set 'moreStyles'}
   <link rel="stylesheet" media="screen" href="@{'/public/stylesheets/jquery.dataTables.css'}">
-  <link rel="stylesheet" media="screen" href="@{'/public/stylesheets/demo_table.css'}">
 #{/set}
 
 #{set 'moreScripts'}
 	<script src="@{'/public/javascripts/jquery.dataTables.min.js'}" type="text/javascript" charset="UTF-8"></script>
-	<script src="@{'/public/javascripts/jquery.jeditable.mini.js'}" type="text/javascript" charset="UTF-8"></script>
-	<script src="@{'/public/javascripts/bootstrap-alert.js'}" type="text/javascript" charset="UTF-8"></script>
+	<script src="@{'/public/javascripts/jquery.jeditable.js'}" type="text/javascript" charset="UTF-8"></script>
 	<script src="@{'/public/javascripts/slt.js'}" type="text/javascript" charset="UTF-8"></script>
 	<script type="text/javascript" charset="utf8">
 		var modificaciones = [];
@@ -140,14 +138,12 @@
 		</div>
 	</div>
 	<div class="content">
-   	<div class="escudos">
-       <ul>
-				#{list torneo.equipos}
-					#{a @Application.equipo(_.id, torneo.id)}
-						<li>${_.nombre.substring(0, 3)}</li>
-					#{/a}
-				#{/list}
-       </ul>
+   	<div>
+			#{list torneo.equipos}
+				<a href="@{Application.equipo(_.id, torneo.id)}" class="btn btn-small">
+					${_.nombre}
+				</a>
+			#{/list}
     </div>
 		<div class="tabla_fecha">
 			<div class="select_fecha">

@@ -183,7 +183,7 @@ function updateTable(id, quien, goles) {
 		// saco la modificacion de la lista de modificaciones
 		modificaciones = $.grep(modificaciones, function(m) { return m.id != mod.id; });
 
-		// "recalculando"
+		// recalculando
 		var dt = $('#tabla').dataTable();
 		dt.fnClearTable();
 		dt.fnAddData(calcularTabla());
@@ -224,9 +224,10 @@ function initComplete() {
 	    return value;
 		},
 		{ 
-	    type    : 'select',
-			submit	: "ok",
-			data		: "{'0':'0', '1':'1', '2':'2', '3':'3', '4':'4', '5':'5', '6':'6', '7':'7', '8':'8', '9':'9'}"
+			cssclass : 'picante',
+	    type     : 'select',
+			onblur   : "submit",
+			data		 : "{'0':'0', '1':'1', '2':'2', '3':'3', '4':'4', '5':'5', '6':'6', '7':'7', '8':'8', '9':'9'}"
 		}
 	);
 }

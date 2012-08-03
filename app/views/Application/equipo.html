@@ -1,9 +1,8 @@
 #{extends 'main.html' /}
-#{set title: 'Sigue la tabla' /}
+#{set title: ':: Sigue la Tabla :: ' + equipo /}
 
 #{set 'moreStyles'}
   <link rel="stylesheet" media="screen" href="@{'/public/stylesheets/jquery.dataTables.css'}">
-  <link rel="stylesheet" media="screen" href="@{'/public/stylesheets/demo_table.css'}">
 #{/set}
 
 #{set 'moreScripts'}
@@ -25,39 +24,47 @@
 	</script>
 #{/set}
 
-#{list torneo.equipos}
-	#{if _ != equipo}
-	#{a @Application.equipo(_.id, torneo.id)}
-		${_}
-	#{/a}
-	#{/if}
-	#{else}
-		<strong>${_}</strong>
-	#{/else}
-	&middot; 
-#{/list}
-<hr/>
-<hr/>
-
-<table cellpadding="5" id="partidos">
-	<thead>
-		<tr>
-			<th>vs</th>
-			<th>a favor</th>
-			<th>en contra</th>
-			<th>&nbsp;</th>
-			<th>fecha</th>
-		</tr>
-	</thead>
-	<tbody>
-	#{list partidos}
-		<tr>
-			<td>${_.local == equipo ? _.visitante : _.local}</td>
-			<td>${_.local == equipo ? _.golesLocal : _.golesVisitante}</td>
-			<td>${_.local == equipo ? _.golesVisitante : _.golesLocal}</td>
-			<td>${_.local == equipo ? "local" : "visitante"}</td>
-			<td>${_.fecha} | ${_.cuando.format('d MMM yy', 'es')}</td>
-		</tr>
-	#{/list}
-	</tbody>
-</table>
+<div class="wrapper">
+	<div class="header">
+		<img src="/public/images/header.png" alt="Sigue la Tabla" />
+	</div>
+	<div class="content">
+   	<div class="well">
+   		<p>
+   			${torneo.liga.pais} - ${torneo.liga} - ${torneo}
+   			<a href="@{Application.index(torneo.liga.pais.name(), torneo.liga.id, torneo.id)}" class="btn">Volver</a>
+   		</p>
+  	</div>
+   	<div>
+			#{list torneo.equipos}
+				<a href="@{Application.equipo(_.id, torneo.id)}" class="btn btn-small ${_ == equipo ? 'btn-success' : ''}">
+					${_.nombre}
+				</a>
+			#{/list}
+    </div>
+		<div class="tabla_fecha">
+			<table>
+				<thead>
+					<tr>
+						<th>fecha</th>
+						<th>&nbsp;</th>
+						<th>vs</th>
+						<th>&nbsp;</th>
+						<th>&nbsp;</th>
+					</tr>
+				</thead>
+				<tbody>
+				#{list partidos}
+					<tr>
+						<td>${_.fecha}</td>
+						<td>${_.cuando.format('d MMM yy', 'es')}</td>
+						<td>${_.local == equipo ? _.visitante : _.local}</td>
+						<td>${_.local == equipo ? _.golesLocal : _.golesVisitante}</td>
+						<td>${_.local == equipo ? _.golesVisitante : _.golesLocal}</td>
+					</tr>
+				#{/list}
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>

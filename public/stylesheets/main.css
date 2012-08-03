@@ -278,8 +278,7 @@ ul li {
 	background: #F4F4F4;
 }
 
-.tabla_posiciones table th { #
-	background: #fff;
+.tabla_posiciones table th {
 	text-transform: uppercase;
 	border-right: solid 1px #F4F4F4;
 	border-bottom: solid 1px #F4F4F4;
@@ -294,16 +293,6 @@ ul li {
 	background: #F4F4F4;
 }
 
-.alert {
-	padding: 8px 35px 8px 14px;
-	margin-bottom: 3px;
-	color: #FCFFFC;
-	# text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
-	background-color: #388B3C;
-	#border: 1px solid #FBEED5;
-	font-weight: bold;
-}
-
 .editable {
 	cursor: pointer;
 }
@@ -314,4 +303,10 @@ ul li {
 
 #next {
 	cursor: pointer;
+}
+
+form.picante select {
+	width: 40px;
+	height: 30px;
+	font-size: 12px;
 }

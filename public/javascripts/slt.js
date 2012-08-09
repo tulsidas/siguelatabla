@@ -112,7 +112,6 @@ function mostrarPartidos(fecha) {
 		// actualizo la info segun las modificaciones del usuario
 		var mod = modById(p.id);
 		
-			// TODO DRY ~75
 		if (mod) {
 			if (!_.isUndefined(mod.golesLocal)) {
 				p.golesLocal = mod.golesLocal;
@@ -124,17 +123,18 @@ function mostrarPartidos(fecha) {
 		
 		return p;
 	});
-
+	
 	return _.map(pdf, function(p) {
 		return {
 			"id"							: p.id,
 			"local_id"				:	p.local_id, 
 			"local"						: p.local,
-			"golesLocal"			: p.golesLocal,
-			"golesVisitante"	: p.golesVisitante,
+			"golesLocal"			: p.confirmado || modById(p.id) ? p.golesLocal : '-',
+			"golesVisitante"	: p.confirmado || modById(p.id) ? p.golesVisitante : '-',
 			"visitante_id"		: p.visitante_id,
 			"visitante"				: p.visitante,
-			"cuando"					: p.cuando
+			"cuando"					: p.cuando,
+			"confirmado"			: p.confirmado
 		};
 	});
 }
@@ -158,9 +158,11 @@ function updateTable(id, quien, goles) {
 	}
 
 	if (quien == 'L') {
-		mod.golesLocal = goles;
+		mod.golesVisitante = 0;
+		$("#" + mod.id + "_V").text(partido.confirmado ? partido.golesVisitante : '0');
 	}
 	else {
+		$("#" + mod.id + "_L").text(partido.confirmado ? partido.golesLocal : '0');
 		mod.golesVisitante = goles;
 	}
 	
@@ -188,9 +190,9 @@ function updateTable(id, quien, goles) {
 		dt.fnClearTable();
 		dt.fnAddData(calcularTabla());
 
-		// cambio tabla partidos
-		$("#" + mod.id + "_L").text(partido.golesLocal);
-		$("#" + mod.id + "_V").text(partido.golesVisitante);
+		// vuelvo atrás la tabla de partidos
+		$("#" + mod.id + "_L").text(partido.confirmado ? partido.golesLocal : '-');
+		$("#" + mod.id + "_V").text(partido.confirmado ? partido.golesVisitante : '-');
 	});
 
 	$('#cambios').append(div);
@@ -203,9 +205,13 @@ function updateTable(id, quien, goles) {
 function prevFecha() { cambiarFecha(-1); };
 function nextFecha() { cambiarFecha(1); };
 
-function createdRow (nRow, aData, iDataIndex) {	
+function createdRow (nRow, aData, iDataIndex) {
 	var row = $(nRow);
 	row.attr("id", "partido_" + aData.id);
+	
+	if (aData.confirmado) {
+		row.addClass("confirmado");
+	}
 	
 	var tds = row.find("td");
 	
@@ -218,8 +224,10 @@ function createdRow (nRow, aData, iDataIndex) {
 function initComplete() {
 	$('.editable').editable(
 		function(value, settings) {
-			var split = this.id.split('_');
-			updateTable(split[0], split[1], parseInt(value));
+			if (value != this.revert) { // solo si modifiqué
+				var split = this.id.split('_');
+				updateTable(split[0], split[1], parseInt(value));
+	    }
 
 	    return value;
 		},

@@ -262,8 +262,17 @@ ul li {
 .tabla_fecha table.dataTable thead th.th4 { width:85px!important;}
 .tabla_fecha table.dataTable thead th.th5 { width:70px!important;}
 .tabla_fecha table.dataTable thead th.th2, .tabla_fecha table.dataTable thead th.th3 { padding:0px!important;}
-.tabla_fecha table tr.odd td {
-	background: #F4F4F4;
+
+table.dataTable tr.odd { background-color: #F4F4F4; }
+table.dataTable tr.even { background-color: white; }
+
+table.dataTable tr.even.confirmado {
+	background-color: #87B874;
+	font-weight: bold;
+}
+table.dataTable tr.odd.confirmado {
+	background-color: #A1DF8A;
+	font-weight: bold;
 }
 
 .tabla_fecha table th {

@@ -24,7 +24,6 @@
 	</script>
 #{/set}
 
-<div class="wrapper">
 	<div class="header">
 		<img src="/public/images/header.png" alt="Sigue la Tabla" />
 	</div>
@@ -42,7 +41,7 @@
 				</a>
 			#{/list}
     </div>
-		<div class="tabla_fecha">
+		<div class="tabla_equipo">
 			<table>
 				<thead>
 					<tr>
@@ -55,7 +54,7 @@
 				</thead>
 				<tbody>
 				#{list partidos}
-					<tr>
+					<tr class="${_parity}">
 						<td>${_.fecha}</td>
 						<td>${_.cuando.format('d MMM yy', 'es')}</td>
 						<td>${_.local == equipo ? _.visitante : _.local}</td>
@@ -67,4 +66,3 @@
 			</table>
 		</div>
 	</div>
-</div>

@@ -32,6 +32,7 @@ body {
 	float: left;
 	width: 100%;
 	background: #000;
+	margin-bottom:10px!important;
 }
 
 .content {
@@ -42,6 +43,18 @@ body {
 	height: 100%;
 	background: #fff;
 }
+
+.footer {
+	display: block;
+	float: left;
+	width: 100%;
+	height: auto;
+	height: 50px;
+	background: #eaeaea;
+	text-align:center;
+}
+
+.footer h4 { padding:10px; margin:0 auto; font-size:11px; font-weight:normal; text-align:center;}
 
 ul li {
 	list-style: none;
@@ -186,14 +199,18 @@ ul li {
 .tabla_fecha {
 	display: block;
 	float: left;
-	width: 40%;
-	margin-left: 24px;
+	width: 43%;
+	margin-top:10px;
 }
+
+.tabla_fecha .dataTables_wrapper { border:solid 1px #008933;}
+.tabla_posiciones .dataTables_wrapper { border:solid 1px #008933;}
+
 
 .tabla_posiciones {
 	display: block;
 	float: left;
-	width: 37%;
+	width: 55%;
 }
 
 .select_fecha {
@@ -201,9 +218,10 @@ ul li {
 	float: left;
 	width: 40%;
 	height: 20px;
-	background: #E4E4E4;
+	background: #008933;
 	padding: 10px;
 	font-size: 13px;
+	color:#fff;
 }
 
 .select_fecha .left {
@@ -237,28 +255,33 @@ ul li {
 	border-bottom: solid 1px #F4F4F4;
 }
 
+/*.tabla_fecha table.dataTable thead th { padding:0px;}
+.tabla_fecha table.dataTable td { padding:3px 4px;}*/
+
+.tabla_fecha table.dataTable thead th.th1 { width:85px!important;}
+.tabla_fecha table.dataTable thead th.th4 { width:85px!important;}
+.tabla_fecha table.dataTable thead th.th5 { width:70px!important;}
+.tabla_fecha table.dataTable thead th.th2, .tabla_fecha table.dataTable thead th.th3 { padding:0px!important;}
 .tabla_fecha table tr.odd td {
 	background: #F4F4F4;
 }
 
 .tabla_fecha table th {
 	text-transform: uppercase;
-	padding: 7px;
 	border-right: solid 1px #F4F4F4;
 	border-bottom: solid 1px #F4F4F4;
 }
 
 .tabla_posiciones {
-	height: 500px;
-	margin-left: 10px;
+	margin-left: 10px; margin-top:11px;
 }
 
 .tabla_posiciones .title {
 	display: block;
 	float: left;
-	width: 95%;
+	width: 100%;
 	height: 20px;
-	padding: 10px;
+	padding:10px 0px;
 	font-size: 13px;
 	background: url(/public/images/title_tabla.png) top left no-repeat;
 }
@@ -283,6 +306,29 @@ ul li {
 	border-right: solid 1px #F4F4F4;
 	border-bottom: solid 1px #F4F4F4;
 }
+
+
+
+
+.tabla_equipo table td {
+	padding: 7px;
+	border-right: solid 1px #F4F4F4;
+	border-bottom: solid 1px #F4F4F4;
+}
+
+.tabla_equipo table th {
+	text-transform: uppercase;
+	border-right: solid 1px #F4F4F4;
+	border-bottom: solid 1px #008933;
+	padding:8px;
+}
+.tabla_equipo table {
+	font-size: 12px;
+	border: solid 2px #008933;
+	margin-top:10px;
+}
+
+.tabla_equipo table tr.odd { background:#F4F4F4;}
 
 .sky {
 	display: block;
@@ -310,3 +356,11 @@ form.picante select {
 	height: 30px;
 	font-size: 12px;
 }
+
+.alert { background:#BEE7A3!important; color:#333!important;}
+
+.ad_izq { display:block; width:300px; height:250px; background:#eaeaea; margin:10px auto;}
+.btn-small { margin-bottom:2px!important}
+.well { font-size:14px; color:#008933; padding:10px 20px!important;}
+.well p { font-size:14px; color:#008933; padding:10px 20px!important;}
+.well p a.btn { float:right;}

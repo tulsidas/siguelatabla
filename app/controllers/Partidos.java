@@ -15,6 +15,8 @@ import play.data.validation.Required;
 import play.mvc.Controller;
 import play.mvc.With;
 
+import com.google.common.base.Predicate;
+import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 
@@ -136,6 +138,21 @@ public class Partidos extends Controller {
             p.save();
          }
          catch (Exception e) {}
+      }
+
+      // se completó la fecha ?
+      Torneo torneo = Torneo.findById(torneoId);
+      List<Partido> deLaFecha = Partido.find("byTorneoAndFecha", torneo, fecha).fetch();
+
+      boolean fechaCompleta = Iterables.all(deLaFecha, new Predicate<Partido>() {
+         public boolean apply(Partido p) {
+            return p.confirmado;
+         }
+      });
+
+      if (fechaCompleta && torneo.fechas > fecha) {
+         torneo.fecha = torneo.fecha + 1;
+         torneo.save();
       }
 
       confirmar(torneoId, fecha);

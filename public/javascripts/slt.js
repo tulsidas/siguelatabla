@@ -85,7 +85,7 @@ function calcularTabla() {
 			var jugados = e.totJugados + e.jugados;
 			return [
 				e.nombre, puntos, e.jugados, e.ganados, e.empatados, e.perdidos, 
-				e.aFavor, e.enContra, (e.aFavor - e.enContra),
+				e.aFavor, e.enContra, /*(e.aFavor - e.enContra),*/
 				jugados > 0 ? ((e.totPuntos + puntos) / jugados).toFixed(3) : 0
 			];
 		})
@@ -158,12 +158,12 @@ function updateTable(id, quien, goles) {
 	}
 
 	if (quien == 'L') {
-		mod.golesVisitante = 0;
-		$("#" + mod.id + "_V").text(partido.confirmado ? partido.golesVisitante : '0');
+		mod.golesLocal = goles;
+		$("#" + mod.id + "_V").text(mod.golesVisitante ? mod.golesVisitante : partido.confirmado ? partido.golesVisitante : '0');
 	}
 	else {
-		$("#" + mod.id + "_L").text(partido.confirmado ? partido.golesLocal : '0');
 		mod.golesVisitante = goles;
+		$("#" + mod.id + "_L").text(mod.golesLocal ? mod.golesLocal : partido.confirmado ? partido.golesLocal : '0');
 	}
 	
 	var golesLocal = _.isUndefined(mod.golesLocal) ? partido.golesLocal : mod.golesLocal;
@@ -172,7 +172,7 @@ function updateTable(id, quien, goles) {
 	// agrego el cambio
 	var txt = mod.local + " " + golesLocal + " - " + golesVisitante + " " + mod.visitante;
 
-	var div = $("<div/>").attr("id", "cambio_"+id).addClass("alert");
+	var div = $("<div/>").attr("id", "cambio_"+id).addClass("alert").addClass("alert-resultado");
 	if ($('#cambio_'+id).length > 0) {
 		div = $($('#cambio_'+id)[0]);
 	}

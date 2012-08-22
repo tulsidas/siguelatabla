@@ -11,7 +11,6 @@ GET     /                                       Application.index
 
 GET			/equipos/																Application.equipo
 
-
 GET			/admin/partidos/pais										Partidos.pais
 POST		/admin/partidos/liga										Partidos.liga
 POST		/admin/partidos/torneo									Partidos.torneo
@@ -19,6 +18,11 @@ GET			/admin/partidos/alta										Partidos.alta
 POST		/admin/partidos/doAlta									Partidos.doAlta
 GET			/admin/partidos/confirmar								Partidos.confirmar
 POST		/admin/partidos/doConfirmar							Partidos.doConfirmar
+
+POST		/closedHelp															Application.closedHelp
+
+GET 		/contacto																Application.contacto
+POST 		/contacto																Application.doContacto
 
 # Ignore favicon requests
 GET     /favicon.ico                            404

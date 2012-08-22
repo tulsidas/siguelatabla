@@ -51,10 +51,16 @@ body {
 	height: auto;
 	height: 50px;
 	background: #eaeaea;
-	text-align:center;
+	text-align: center;
 }
 
-.footer h4 { padding:10px; margin:0 auto; font-size:11px; font-weight:normal; text-align:center;}
+.footer h4 { 
+	padding:10px; 
+	margin:0 auto; 
+	font-size:13px;
+	font-weight:normal;
+	text-align:center;
+}
 
 ul li {
 	list-style: none;
@@ -261,17 +267,19 @@ ul li {
 .tabla_fecha table.dataTable thead th.th1 { width:85px!important;}
 .tabla_fecha table.dataTable thead th.th4 { width:85px!important;}
 .tabla_fecha table.dataTable thead th.th5 { width:70px!important;}
-.tabla_fecha table.dataTable thead th.th2, .tabla_fecha table.dataTable thead th.th3 { padding:0px!important;}
+.tabla_fecha table.dataTable thead th.th2, .tabla_fecha table.dataTable thead th.th3 { 
+	padding:0px!important;
+}
 
 table.dataTable tr.odd { background-color: #F4F4F4; }
 table.dataTable tr.even { background-color: white; }
 
 table.dataTable tr.even.confirmado {
-	background-color: #D3FFC2;
+	background-color: #FAFFA3;
 	font-weight: bold;
 }
 table.dataTable tr.odd.confirmado {
-	background-color: #EFFFE8;
+	background-color: #FFFEE8;
 	font-weight: bold;
 }
 
@@ -316,9 +324,6 @@ table.dataTable tr.odd.confirmado {
 	border-bottom: solid 1px #F4F4F4;
 }
 
-
-
-
 .tabla_equipo table td {
 	padding: 7px;
 	border-right: solid 1px #F4F4F4;
@@ -338,6 +343,10 @@ table.dataTable tr.odd.confirmado {
 }
 
 .tabla_equipo table tr.odd { background:#F4F4F4;}
+
+.tabla_equipo table tr.empate { background: #FFFFAE;}
+.tabla_equipo table tr.victoria { background: #A5F8A5;}
+.tabla_equipo table tr.derrota { background: #FF9B9B;}
 
 .sky {
 	display: block;
@@ -361,12 +370,13 @@ table.dataTable tr.odd.confirmado {
 }
 
 form.picante select {
-	width: 40px;
+	width: 45px;
 	height: 30px;
 	font-size: 12px;
+	margin-bottom: 0px;
 }
 
-.alert { background:#BEE7A3!important; color:#333!important;}
+.alert-resultado { background:#BEE7A3!important; color:#333!important;}
 
 .ad_izq { display:block; width:300px; height:250px; background:#eaeaea; margin:10px auto;}
 .btn-small { margin-bottom:2px!important}

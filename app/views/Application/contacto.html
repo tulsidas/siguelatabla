@@ -1,0 +1,37 @@
+#{extends 'main.html' /}
+#{set title: ':: Sigue la Tabla ::' /}
+
+<div class="content">
+	<div class="well">
+		<p>
+			Contactate con <strong>Sigue La Tabla</strong>
+			<a href="@{Application.index()}" class="btn">Volver</a>
+		</p>
+	</div>
+	<form class="form-horizontal" action="@{Application.doContacto}" method="POST">
+		<div class="control-group">
+			<label class="control-label">Nombre</label>
+			<div class="controls">
+				<input type="text" placeholder="nombre" class="input-xlarge" name="nombre"><span class="help-inline">opcional</span>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">Email</label>
+			<div class="controls">
+				<input type="text" placeholder="email" class="input-xlarge" name="email"><span class="help-inline">opcional</span>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">Comentario</label>
+			<div class="controls">
+				<textarea name="comentario" rows="7" class="input-xlarge" placeholder="bla ble bli blo blu"></textarea>
+				<span class="help-inline">requerido</span>
+			</div>
+		</div>
+		<div class="control-group">
+			<div class="controls">
+				<button type="submit" class="btn">Enviar</button>
+			</div>
+		</div>
+	</form>
+</div>

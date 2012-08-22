@@ -24,9 +24,6 @@
 	</script>
 #{/set}
 
-	<div class="header">
-		<img src="/public/images/header.png" alt="Sigue la Tabla" />
-	</div>
 	<div class="content">
    	<div class="well">
    		<p>
@@ -54,7 +51,21 @@
 				</thead>
 				<tbody>
 				#{list partidos}
-					<tr class="${_parity}">
+					%{
+						String res = "";
+						if (_.confirmado) {
+							if (_.golesLocal == _.golesVisitante) {
+								res = 'empate';
+							}
+							else if (_.local == equipo) {
+								res = _.golesLocal > _.golesVisitante ? 'victoria' : derrota;
+							}
+							else {
+								res = _.golesVisitante > _.golesLocal ? 'victoria' : derrota;
+							}
+						}
+					}%
+					<tr class="${_parity} ${res}">
 						<td>${_.fecha}</td>
 						<td>${_.cuando.format('d MMM yy', 'es')}</td>
 						<td>${_.local == equipo ? _.visitante : _.local}</td>

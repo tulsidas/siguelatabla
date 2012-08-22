@@ -51,7 +51,7 @@
 	    		"bSaveState": false,
 	    		"bSort": true,
 	    		"bSortClasses": false,
-	    		"aaSorting": [ [1, 'desc'], [8, 'desc'], [8, 'desc'], [0, 'asc'] ],
+	    		"aaSorting": [ [1, 'desc'], [6, 'desc'], [7, 'desc'], [0, 'asc'] ],
 	    		"aaData": calcularTabla(),
 					"oLanguage": {
 			      "sEmptyTable": "No hay información de equipos"
@@ -79,6 +79,10 @@
 		      "sEmptyTable": "No hay información de partidos"
 		    } 
 			});
+			
+			$('#help-alert').bind('closed', function () {
+			  $.post('closedHelp');
+			})
 	    
 			// botones para avanzar y retroceder de fecha
 			$('#prev').click(prevFecha);
@@ -87,9 +91,6 @@
 	</script>
 #{/set}
 
-	<div class="header">
-		<img src="/public/images/header.png" alt="Sigue la Tabla" />
-	</div>
 	<div class="nav">
 		*{ 
 		<div class="paises">
@@ -136,6 +137,38 @@
 			</ul>
 		</div>
 	</div>
+
+	#{if flash.msg}
+		<div class="alert alert-info">
+			<button type="button" class="close" data-dismiss="alert">×</button> 
+			${flash.msg}
+		</div>
+	#{/if}
+	
+	#{if showHelp}
+	<div id="help-alert" class="alert alert-success">
+	  <button type="button" class="close" data-dismiss="alert">×</button>
+	  <h4>&iquest;Primera vez en <strong>Sigue La Tabla</strong>?</h4>
+	  <br/>
+
+	  <p>
+	  	En <strong>Sigue La Tabla</strong> podés ver las tablas de posiciones de distintas ligas y 
+	  	torneos de Argentina (y en breve otros países), pero lo más importante es que podés <em>interactuar</em>
+	  	con las tablas, y ver cómo quedaría si tu equipo gana la próxima fecha, por ejemplo, o cómo hubiera quedado si en
+	  	una fecha pasada las cosas se daban de otra modo.
+	  </p>
+	  <p>
+	  	No hace falta registrarte ni nada, simplemente hacé <strong>click</strong> en la tabla de resultados, y mirá
+	  	cómo se modifica la tabla de posiciones. También podés deshacer los cambios hechos o modificarlos cuantas veces quieras.
+	  </p>
+	  <p>
+	  	Dudas, consultas, sugerencias y demases: <a href="@{Application.contacto()}">contacto</a>
+	  </p>
+	  
+	  <button type="button" class="btn btn-success" data-dismiss="alert">&iexcl;Entendí!</button>
+	</div>
+	#{/if}
+	
 	<div class="content">
    	<div>
 			#{list torneo.equipos}
@@ -171,14 +204,14 @@
 			</table>
 			
 			<div id="cambios"></div>
-		<div class="ad_izq"></div>
+<!-- 		<div class="ad_izq"></div> -->
         </div>
 		<div class="tabla_posiciones">
 			<div class="title"></div>
 			<table width="100%" border="0" cellspacing="0" cellpadding="0" id="tabla">
 				<thead>
 					<tr>
-						<th>Equipo</th>
+						<th style="width: 50%">Equipo</th>
 						<th>PTS</th>
 						<th>PJ</th>
 						<th>PG</th>
@@ -186,7 +219,7 @@
 						<th>PP</th>
 						<th>GF</th>
 						<th>GC</th>
-						<th>DG</th>
+<!-- 						<th>DG</th> -->
 						<th>PROM</th>
 					</tr>
 				</thead>

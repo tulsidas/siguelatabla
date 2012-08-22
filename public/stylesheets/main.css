@@ -275,11 +275,11 @@ table.dataTable tr.odd { background-color: #F4F4F4; }
 table.dataTable tr.even { background-color: white; }
 
 table.dataTable tr.even.confirmado {
-	background-color: #FAFFA3;
+	background-color: #E4F8FF;
 	font-weight: bold;
 }
 table.dataTable tr.odd.confirmado {
-	background-color: #FFFEE8;
+	background-color: #EDFFDD;
 	font-weight: bold;
 }
 

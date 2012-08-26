@@ -156,7 +156,7 @@ function updateTable(id, quien, goles) {
 		};
 		modificaciones.push(mod);
 	}
-
+	
 	if (quien == 'L') {
 		mod.golesLocal = goles;
 		$("#" + mod.id + "_V").text(mod.golesVisitante ? mod.golesVisitante : partido.confirmado ? partido.golesVisitante : '0');
@@ -189,6 +189,7 @@ function updateTable(id, quien, goles) {
 		var dt = $('#tabla').dataTable();
 		dt.fnClearTable();
 		dt.fnAddData(calcularTabla());
+		posInitComplete();
 
 		// vuelvo atrás la tabla de partidos
 		$("#" + mod.id + "_L").text(partido.confirmado ? partido.golesLocal : '-');
@@ -200,6 +201,7 @@ function updateTable(id, quien, goles) {
 	var dt = $('#tabla').dataTable();
 	dt.fnClearTable();
 	dt.fnAddData(calcularTabla());
+	posInitComplete();
 }
 
 function prevFecha() { cambiarFecha(-1); };
@@ -221,6 +223,7 @@ function createdRow (nRow, aData, iDataIndex) {
 	$(tds[2]).addClass("editable");
 }
 
+/* la tabla de PARTIDOS se actualizo */
 function initComplete() {
 	$('.editable').editable(
 		function(value, settings) {
@@ -238,6 +241,12 @@ function initComplete() {
 			data		 : "{'0':'0', '1':'1', '2':'2', '3':'3', '4':'4', '5':'5', '6':'6', '7':'7', '8':'8', '9':'9'}"
 		}
 	);
+}
+
+/* la tabla de POSICIONES se actualizo */
+function posInitComplete() {
+	$("#tabla tbody tr:first").addClass('lider');
+	$("#tabla tbody tr").slice(-3).addClass('descenso');
 }
 
 function cambiarFecha(d) {

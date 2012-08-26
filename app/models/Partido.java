@@ -51,7 +51,7 @@ public class Partido extends Model {
    public String toString() {
       return "Fecha " + fecha + " - " + local + " vs " + visitante;
    }
-
+   
    /**
     * con join fetch de equipos y estadios
     */

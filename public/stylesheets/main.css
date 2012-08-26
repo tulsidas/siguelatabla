@@ -314,8 +314,22 @@ table.dataTable tr.odd.confirmado {
 	border-right: solid 1px #F4F4F4;
 }
 
-.tabla_posiciones table tr.odd td {
+/*.tabla_posiciones table tr.odd td {
 	background: #F4F4F4;
+}*/
+
+table.dataTable tr.lider {
+	background-color: #CDFDCD;
+	border-top: solid 1px green;
+	border-bottom: solid 1px green;
+	color: green;
+	font-weight: bold;
+}
+table.dataTable tr.descenso {
+	background-color: #FDD;
+	border-top: solid 1px red;
+	border-bottom: solid 1px red;
+	color: red;
 }
 
 .tabla_posiciones table th {
@@ -380,6 +394,6 @@ form.picante select {
 
 .ad_izq { display:block; width:300px; height:250px; background:#eaeaea; margin:10px auto;}
 .btn-small { margin-bottom:2px!important}
-.well { font-size:14px; color:#008933; padding:10px 20px!important;}
-.well p { font-size:14px; color:#008933; padding:10px 20px!important;}
-.well p a.btn { float:right;}
+#.well { font-size:14px; color:#008933; padding:10px 20px!important;}
+#.well p { font-size:14px; color:#008933; padding:10px 20px!important;}
+#.well p a.btn { float:right;}

@@ -53,6 +53,7 @@
 	    		"bSortClasses": false,
 	    		"aaSorting": [ [1, 'desc'], [6, 'desc'], [7, 'asc'], [0, 'asc'] ],
 	    		"aaData": calcularTabla(),
+	   			"fnInitComplete": posInitComplete,
 					"oLanguage": {
 			      "sEmptyTable": "No hay información de equipos"
 			    } 
@@ -205,6 +206,7 @@
 			
 			<div id="cambios"></div>
     		<div class="ad_izq">
+    				#{if play.mode.name() == 'PROD'}
             <script type="text/javascript"><!--
                google_ad_client = "ca-pub-1938860750012804";
                /* siguelatabla_box */
@@ -214,6 +216,7 @@
                //-->
             </script>
             <script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>
+            #{/if}
          </div>
         </div>
 		<div class="tabla_posiciones">

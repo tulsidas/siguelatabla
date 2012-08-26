@@ -86,8 +86,6 @@ public class Application extends Controller {
 
 // TODO mostrar cuando un cambio cambia la tabla (animacion de equipo subiendo /
 // bajando)
-// TODO resaltar al primero
-// TODO resaltar a los descensos
 
 // @formatter:off
 

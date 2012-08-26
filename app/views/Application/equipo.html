@@ -77,3 +77,71 @@
 			</table>
 		</div>
 	</div>
+
+	
+*{
+$(function () {
+    var chart;
+    $(document).ready(function() {
+        chart = new Highcharts.Chart({
+            chart: {
+                renderTo: 'container',
+                type: 'line',
+                marginRight: 130,
+                marginBottom: 25
+            },
+            scrollbar: {
+                enabled: true
+            },
+            title: {
+                text: 'Monthly Average Temperature',
+                x: -20 //center
+            },
+            subtitle: {
+                text: 'Source: WorldClimate.com',
+                x: -20
+            },
+            xAxis: {
+                title: {
+                    text: 'Fecha'
+                },
+                min: 6,
+                tickInterval: 1
+            },
+            yAxis: {
+                title: {
+                    text: 'Puntos'
+                },
+                min: 0,
+                tickInterval: 3,
+                plotLines: [{
+                    value: 0,
+                    width: 5,
+                    color: '#808080'
+                }]
+            },
+            tooltip: {
+                formatter: function() {
+                        return '<b>'+ this.series.name +'</b><br/>'+
+                        this.x +': '+ this.y +' puntos';
+                }
+            },
+            legend: {
+                layout: 'vertical',
+                align: 'right',
+                verticalAlign: 'top',
+                x: -10,
+                y: 100,
+                borderWidth: 0
+            },
+            series: [{
+                name: 'Racing',
+                data: [1,3,4,7,10,11,12,13,16,17,17,20]
+            }, {
+                name: 'River',
+                data: [3,6,9,9,9,10,11,14,17,17,18,21]
+            }]
+        });
+    });
+});​
+}*

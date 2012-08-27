@@ -7,6 +7,7 @@
 
 #{set 'moreScripts'}
 	<script src="@{'/public/javascripts/jquery.dataTables.min.js'}" type="text/javascript" charset="UTF-8"></script>
+	<script src="@{'/public/javascripts/highcharts.js'}" type="text/javascript" charset="UTF-8"></script>
 	<script type="text/javascript" charset="utf8">
 		$(document).ready(function() {
 	    $('#partidos').dataTable(
@@ -20,10 +21,72 @@
 	    		"bSortClasses": false,
     		}
 	    );
+	    
+	    // chart
+      var chart = new Highcharts.Chart({
+	        chart: {
+	            renderTo: 'chart',
+	            type: 'line',
+	            marginRight: 130
+	        },
+	        scrollbar: {
+	            enabled: true
+	        },
+	        title: {
+	            text: 'Evolución de ${equipo}',
+	            x: -20 //center
+	        },
+	        subtitle: {
+	            text: '${torneo.raw()}',
+	            x: -20
+	        },
+	        xAxis: {
+	            title: {
+	                text: 'Fecha'
+	            },
+	            tickInterval: 1,
+	        },
+	        yAxis: {
+	            title: {
+	                text: 'Puntos'
+	            },
+	            min: 0,
+	            tickInterval: 3,
+//	            plotLines: [{
+//	                value: ${puntosLider.last()},
+//	                width: 3,
+//	                color: 'green'
+//	            }]
+	        },
+	        tooltip: {
+	            formatter: function() {
+	                    return '<b>'+ this.series.name +'</b><br/>'
+	                    + 'Fecha ' + this.x +': '+ this.y +' puntos';
+	            }
+	        },
+//	        legend: {
+//	            layout: 'vertical',
+//	            align: 'right',
+//	            verticalAlign: 'top',
+//	            x: -10,
+//	            y: 100,
+//	            borderWidth: 0
+//	        },
+	        series: [{
+	            name: '${equipo}',
+	            data: [${puntos.join(',')}]
+	        }
+	        #{if equipo != lider}
+	        , {
+	            name: '${lider}',
+	            data: [${puntosLider.join(',')}]
+	        }
+	        #{/if}
+	        ]
+	    });
     });
 	</script>
 #{/set}
-
 	<div class="content">
    	<div class="well">
    		<p>
@@ -38,110 +101,46 @@
 				</a>
 			#{/list}
     </div>
-		<div class="tabla_equipo">
-			<table>
-				<thead>
-					<tr>
-						<th>fecha</th>
-						<th>&nbsp;</th>
-						<th>vs</th>
-						<th>&nbsp;</th>
-						<th>&nbsp;</th>
-					</tr>
-				</thead>
-				<tbody>
-				#{list partidos}
-					%{
-						String res = "";
-						if (_.confirmado) {
-							if (_.golesLocal == _.golesVisitante) {
-								res = 'empate';
+    <div class="row">
+			<div class="tabla_equipo span4">
+				<table>
+					<thead>
+						<tr>
+							<th>fecha</th>
+							<th>&nbsp;</th>
+							<th>vs</th>
+							<th>&nbsp;</th>
+							<th>&nbsp;</th>
+						</tr>
+					</thead>
+					<tbody>
+					#{list partidos}
+						%{
+							String res = "";
+							if (_.confirmado) {
+								if (_.golesLocal == _.golesVisitante) {
+									res = 'empate';
+								}
+								else if (_.local == equipo) {
+									res = _.golesLocal > _.golesVisitante ? 'victoria' : 'derrota';
+								}
+								else {
+									res = _.golesVisitante > _.golesLocal ? 'victoria' : 'derrota';
+								}
 							}
-							else if (_.local == equipo) {
-								res = _.golesLocal > _.golesVisitante ? 'victoria' : 'derrota';
-							}
-							else {
-								res = _.golesVisitante > _.golesLocal ? 'victoria' : 'derrota';
-							}
-						}
-					}%
-					<tr class="${_parity} ${res}">
-						<td>${_.fecha}</td>
-						<td>${_.cuando.format('d MMM yy', 'es')}</td>
-						<td>${_.local == equipo ? _.visitante : _.local}</td>
-						<td>${_.local == equipo ? _.golesLocal : _.golesVisitante}</td>
-						<td>${_.local == equipo ? _.golesVisitante : _.golesLocal}</td>
-					</tr>
-				#{/list}
-				</tbody>
-			</table>
+						}%
+						<tr class="${_parity} ${res}">
+							<td>${_.fecha}</td>
+							*{(${_.cuando.format('d MMM yy', 'es')})}*
+							<td>${_.local == equipo ? 'L' : 'V'}</td>
+							<td>${_.local == equipo ? _.visitante : _.local}</td>
+							<td>${_.local == equipo ? _.golesLocal : _.golesVisitante}</td>
+							<td>${_.local == equipo ? _.golesVisitante : _.golesLocal}</td>
+						</tr>
+					#{/list}
+					</tbody>
+				</table>
+			</div> <!-- tabla_equipo -->
+			<div id="chart" class="span8 offset"></div>
 		</div>
 	</div>
-
-	
-*{
-$(function () {
-    var chart;
-    $(document).ready(function() {
-        chart = new Highcharts.Chart({
-            chart: {
-                renderTo: 'container',
-                type: 'line',
-                marginRight: 130,
-                marginBottom: 25
-            },
-            scrollbar: {
-                enabled: true
-            },
-            title: {
-                text: 'Monthly Average Temperature',
-                x: -20 //center
-            },
-            subtitle: {
-                text: 'Source: WorldClimate.com',
-                x: -20
-            },
-            xAxis: {
-                title: {
-                    text: 'Fecha'
-                },
-                min: 6,
-                tickInterval: 1
-            },
-            yAxis: {
-                title: {
-                    text: 'Puntos'
-                },
-                min: 0,
-                tickInterval: 3,
-                plotLines: [{
-                    value: 0,
-                    width: 5,
-                    color: '#808080'
-                }]
-            },
-            tooltip: {
-                formatter: function() {
-                        return '<b>'+ this.series.name +'</b><br/>'+
-                        this.x +': '+ this.y +' puntos';
-                }
-            },
-            legend: {
-                layout: 'vertical',
-                align: 'right',
-                verticalAlign: 'top',
-                x: -10,
-                y: 100,
-                borderWidth: 0
-            },
-            series: [{
-                name: 'Racing',
-                data: [1,3,4,7,10,11,12,13,16,17,17,20]
-            }, {
-                name: 'River',
-                data: [3,6,9,9,9,10,11,14,17,17,18,21]
-            }]
-        });
-    });
-});​
-}*

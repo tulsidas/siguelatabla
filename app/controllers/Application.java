@@ -1,17 +1,21 @@
 package controllers;
 
-import play.*;
-import play.mvc.*;
+import java.util.List;
+import java.util.Map;
 
-import java.util.*;
+import models.Comentario;
+import models.Equipo;
+import models.Liga;
+import models.Pais;
+import models.Partido;
+import models.Torneo;
 
 import org.apache.commons.lang.StringUtils;
 
+import play.mvc.Controller;
+
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.google.common.collect.Sets;
-
-import models.*;
 
 public class Application extends Controller {
 
@@ -56,8 +60,12 @@ public class Application extends Controller {
       }
 
       List<Partido> partidos = equipo.getPartidos(torneo);
+      List<Integer> puntos = getPuntos(partidos, equipo);
 
-      render(equipo, torneo, partidos);
+      Equipo lider = getLider(torneo.partidos);
+      List<Integer> puntosLider = getPuntos(lider.getPartidos(torneo), lider);
+
+      render(equipo, torneo, partidos, puntos, lider, puntosLider);
    }
 
    public static void closedHelp() {
@@ -81,6 +89,66 @@ public class Application extends Controller {
       }
 
       index(null, null, null);
+   }
+
+   // ////////////////////////////////////////////////////////////////
+   // private
+   // ////////////////////////////////////////////////////////////////
+   private static List<Integer> getPuntos(List<Partido> partidos, Equipo equipo) {
+      List<Integer> puntos = Lists.newArrayList(0); // arranco en 0
+      int _puntos = 0;
+      for (Partido p : partidos) {
+         if (p.confirmado) {
+            if (p.gano(equipo)) {
+               _puntos += 3;
+            }
+            else if (p.empate()) {
+               _puntos += 1;
+            }
+
+            puntos.add(_puntos);
+         }
+      }
+
+      return puntos;
+   }
+
+   private static Equipo getLider(List<Partido> partidos) {
+      Map<Equipo, Integer> puntos = Maps.newHashMap();
+
+      for (Partido p : partidos) {
+         if (!puntos.containsKey(p.local)) {
+            puntos.put(p.local, 0);
+         }
+         if (!puntos.containsKey(p.visitante)) {
+            puntos.put(p.visitante, 0);
+         }
+
+         if (p.empate()) {
+            puntos.put(p.local, puntos.get(p.local) + 1);
+            puntos.put(p.visitante, puntos.get(p.visitante) + 1);
+         }
+         else if (p.golesLocal > p.golesVisitante) {
+            puntos.put(p.local, puntos.get(p.local) + 3);
+         }
+         else {
+            puntos.put(p.visitante, puntos.get(p.visitante) + 3);
+         }
+      }
+
+      Equipo lider = null;
+      for (Map.Entry<Equipo, Integer> entry : puntos.entrySet()) {
+         if (lider == null) {
+            lider = entry.getKey();
+         }
+         else {
+            if (entry.getValue() > puntos.get(lider)) {
+               lider = entry.getKey();
+            }
+         }
+      }
+
+      return lider;
    }
 }
 

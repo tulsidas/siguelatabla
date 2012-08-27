@@ -51,7 +51,7 @@ public class Partido extends Model {
    public String toString() {
       return "Fecha " + fecha + " - " + local + " vs " + visitante;
    }
-   
+
    /**
     * con join fetch de equipos y estadios
     */
@@ -59,6 +59,20 @@ public class Partido extends Model {
       return em()
             .createQuery("from Partido p join fetch p.torneo where p.torneo = :torneo",
                   Partido.class).setParameter("torneo", t).getResultList();
-      //  t join fetch t.equipos where p.torneo = :torneo
+      // t join fetch t.equipos where p.torneo = :torneo
+   }
+
+   public boolean gano(Equipo e) {
+      return (local.equals(e) && golesLocal > golesVisitante)
+            || (visitante.equals(e) && golesLocal < golesVisitante);
+   }
+
+   public boolean empate() {
+      return golesLocal == golesVisitante;
+   }
+
+   public boolean perdio(Equipo e) {
+      return (local.equals(e) && golesLocal < golesVisitante)
+            || (visitante.equals(e) && golesLocal > golesVisitante);
    }
 }

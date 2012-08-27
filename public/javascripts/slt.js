@@ -246,7 +246,14 @@ function initComplete() {
 /* la tabla de POSICIONES se actualizo */
 function posInitComplete() {
 	$("#tabla tbody tr:first").addClass('lider');
-	$("#tabla tbody tr").slice(-3).addClass('descenso');
+
+	var tds = $("#tabla tbody tr td:nth-child(9)"); // FIXME si agrego una columna cambiar aca
+	
+	var sorted = _.sortBy(tds, function(td) {
+		return parseFloat($(td).text()) 
+	}).slice(0,3);
+	
+	$(sorted).parent().addClass('descenso');
 }
 
 function cambiarFecha(d) {

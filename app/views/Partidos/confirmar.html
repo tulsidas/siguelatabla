@@ -1,4 +1,4 @@
-#{extends 'main.html' /}
+#{extends 'admin.html' /}
 #{set title: 'Confirmacion Partido' /}
 
 #{set 'moreStyles'}
@@ -26,12 +26,27 @@
 					stepMinute: 5
 				}
 			);
+			
+			$('.checkall').click(function () {
+				$(':checkbox').attr('checked', this.checked);
+			});
 		});
 	</script>
 #{/set}
 
 #{form @Partidos.doConfirmar(), method:'POST'}
 <table cellpadding="10" border="1">
+
+<h2>${torneo} - Fecha ${fecha}</h2>
+	<tr>
+		<th>Local</th>
+		<th>&nbsp;</th>
+		<th>&nbsp;</th>
+		<th>Visitante</th>
+		<th>Cuando</th>
+		<th><input type="checkbox" class="checkall" /></th>
+	</tr>
+
 #{list partidos, as: 'p'}
 	<tr>
 		<td>${p.local}</td>

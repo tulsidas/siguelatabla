@@ -154,6 +154,8 @@ public class Partidos extends Controller {
          torneo.fecha = torneo.fecha + 1;
          torneo.save();
       }
+      
+      flash.put("msg", "cambios guardados");
 
       confirmar(torneoId, fecha);
    }

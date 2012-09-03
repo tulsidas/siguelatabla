@@ -33,7 +33,7 @@
 	            enabled: true
 	        },
 	        title: {
-	            text: 'Evolución de ${equipo}',
+	            text: 'Evolución de ${equipo.raw()}',
 	            x: -20 //center
 	        },
 	        subtitle: {
@@ -73,12 +73,12 @@
 //	            borderWidth: 0
 //	        },
 	        series: [{
-	            name: '${equipo}',
+	            name: '${equipo.raw()}',
 	            data: [${puntos.join(',')}]
 	        }
 	        #{if equipo != lider}
 	        , {
-	            name: '${lider}',
+	            name: '${lider.raw()}',
 	            data: [${puntosLider.join(',')}]
 	        }
 	        #{/if}

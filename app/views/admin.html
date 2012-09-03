@@ -4,7 +4,6 @@
     <head>
         <title>#{get 'title' /}</title>
         <meta charset="UTF-8">
-        <meta name="google-site-verification" content="g1ngPld5YU3sz9Ho5jxvFcuI9CTeocSiKBqph1zGuzE" />
         #{get 'moreStyles' /}
         <link rel="stylesheet" media="screen" href="@{'/public/stylesheets/main.css'}">
         <link rel="stylesheet" media="screen" href="@{'/public/stylesheets/bootstrap.css'}">
@@ -16,22 +15,6 @@
         <script src="@{'/public/javascripts/bootstrap.min.js'}" type="text/javascript" charset="UTF-8"></script>
         #{get 'moreScripts' /}
         
-#{if play.mode.name() == 'PROD'}
-<!-- analytics -->
-<script type="text/javascript">
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-34279624-1']);
-  _gaq.push(['_trackPageview']);
-
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
-
-</script>
-<!-- analytics -->
-#{/if}
     </head>
 	<body>
 	<div class="wrapper">
@@ -40,14 +23,12 @@
 				<img src="/public/images/header.png" alt="Sigue la Tabla" />
 			</a>
 		</div>
+		#{if flash.msg}
+			<div class="alert alert-info">
+			${flash.msg}
+			</div>
+		#{/if}
     #{doLayout /}
-		<div class="footer">
-			<h4>
-				&#9658; &nbsp;
-				<a href="@{Application.contacto}">contacto</a>
-				&nbsp; &#9668;
-			</h4>
-		</div>
 	</div>
 	</body>
 </html>

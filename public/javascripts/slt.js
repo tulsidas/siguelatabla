@@ -77,7 +77,7 @@ function calcularTabla() {
 		}
 	});
 
-	_.sortBy(filas, function(f) { return f.puntos*1000 + (f.aFavor - f.enContra); });
+	// _.sortBy(filas, function(f) { return f.puntos*1000 + (f.aFavor - f.enContra); });
 	
 	var ret = 
 		_.map(filas, function(e, id) {

@@ -85,7 +85,7 @@ function calcularTabla() {
 			var jugados = e.totJugados + e.jugados;
 			return [
 				e.nombre, puntos, e.jugados, e.ganados, e.empatados, e.perdidos, 
-				e.aFavor, e.enContra, /*(e.aFavor - e.enContra),*/
+				e.aFavor, e.enContra, (e.aFavor - e.enContra),
 				jugados > 0 ? ((e.totPuntos + puntos) / jugados).toFixed(3) : 0
 			];
 		})

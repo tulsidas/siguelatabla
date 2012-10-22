@@ -247,7 +247,9 @@ function initComplete() {
 function posInitComplete() {
 	$("#tabla tbody tr:first").addClass('lider');
 
-	var tds = $("#tabla tbody tr td:nth-child(9)"); // FIXME si agrego una columna cambiar aca
+	var tds = $("#tabla tbody tr td:nth-child(10)"); // FIXME si agrego una columna cambiar aca
+
+	console.log(tds);
 	
 	var sorted = _.sortBy(tds, function(td) {
 		return parseFloat($(td).text()) 

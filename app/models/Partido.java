@@ -62,6 +62,18 @@ public class Partido extends Model {
       // t join fetch t.equipos where p.torneo = :torneo
    }
 
+   /**
+    * los partidos del torneo anteriores a la fecha dada que no hayan sido
+    * confirmados
+    */
+   public static List<Partido> findNoConfirmados(Torneo torneo, int fecha) {
+      return em()
+            .createQuery(
+                  "from Partido p where p.torneo = :torneo and p.fecha < :fecha and confirmado = false",
+                  Partido.class).setParameter("torneo", torneo).setParameter("fecha", fecha)
+            .getResultList();
+   }
+
    public boolean gano(Equipo e) {
       return (local.equals(e) && golesLocal > golesVisitante)
             || (visitante.equals(e) && golesLocal < golesVisitante);

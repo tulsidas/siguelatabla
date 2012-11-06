@@ -100,8 +100,9 @@ public class Partidos extends Controller {
       Torneo torneo = Torneo.findById(torneoId);
 
       List<Partido> partidos = Partido.find("byTorneoAndFecha", torneo, fecha).fetch();
+      List<Partido> previosNoConfirmados = Partido.findNoConfirmados(torneo, fecha);
 
-      render(partidos, torneo, fecha);
+      render(partidos, previosNoConfirmados, torneo, fecha);
    }
 
    public static void doConfirmar(long torneoId, int fecha) {

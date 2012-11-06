@@ -68,3 +68,9 @@
 	#{a @Partidos.confirmar(torneo.id, fecha + 1)}&rarr;#{/a}
 #{/if}
 #{/form}
+
+<hr/>
+<h2>Partidos previos no confirmados</h2>
+#{list previosNoConfirmados, as: 'p'}
+	#{a @Partidos.confirmar(torneo.id, p.fecha)}Fecha ${p.fecha}#{/a} ${p.local} - ${p.visitante}<br/>
+#{/list}

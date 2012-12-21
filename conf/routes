@@ -24,6 +24,9 @@ POST		/closedHelp															Application.closedHelp
 GET 		/contacto																Application.contacto
 POST 		/contacto																Application.doContacto
 
+### estadisticas
+GET			/a_inicial_2012													staticFile:/public/inicial2012.html
+
 # Ignore favicon requests
 GET     /favicon.ico                            404
 

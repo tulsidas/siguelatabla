@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+<title>Estadísticas Torneo Inicial 2012/2013</title>
+<meta charset="UTF-8">
+<meta name="google-site-verification" content="g1ngPld5YU3sz9Ho5jxvFcuI9CTeocSiKBqph1zGuzE" />
+<link rel="stylesheet" media="screen" href="/public/stylesheets/main.css">
+<link rel="stylesheet" media="screen" href="/public/stylesheets/bootstrap.css">
+<link rel="shortcut icon" type="image/png" href="/public/images/favicon.png">
+<link href='http://fonts.googleapis.com/css?family=Gafata' rel='stylesheet' type='text/css'>
+<style>
+body { 
+	background: url(/public/images/hexabump.png) repeat 0 0;
+}
+h1, h2, h3, h4, h5, h6 {
+	font-family: 'Gafata';
+}
+p, div, strong, td {
+	font-family: 'Gafata';
+}
+</style>
+
+<script src="/public/javascripts/jquery-1.7.2.min.js" type="text/javascript" charset="UTF-8"></script>
+<script src="/public/javascripts/underscore-min.js" type="text/javascript" charset="UTF-8"></script>
+<script src="/public/javascripts/bootstrap.min.js" type="text/javascript" charset="UTF-8"></script>
+<script src="/public/javascripts/highcharts.js" type="text/javascript" charset="UTF-8"></script>
+<script type="text/javascript">
+					$(function () {
+					    var chart;
+					    $(document).ready(function() {
+					        chart = new Highcharts.Chart({
+					            chart: {
+				            		width: 400,
+				            		height: 300,
+				                renderTo: 'goles_por_partido',
+				                type: 'column'
+					            },
+					            title: {
+				                text: 'Goles por partido'
+					            },
+					            xAxis: {
+				            		min: 0,
+				            		allowDecimals: false,
+				            		tickInterval: 1,
+				                title: {
+			                    text: 'goles'
+				                }
+					            },
+					            yAxis: {
+				                min: 0,
+				                title: {
+			                    text: 'partidos'
+				                },
+					            },
+					            tooltip: {
+				                formatter: function() {
+		                    	return ''+ this.y + ' ' + this.series.name + ' con ' + this.x + ' goles';
+				                }
+					            },
+					            plotOptions: {
+				                bar: {
+			                    dataLabels: {
+		                        enabled: true
+			                    }
+				                }
+					            },
+					            legend: {
+				            		enabled: false
+					            },
+					            credits: {
+				                enabled: true
+					            },
+					            series: [{
+				                name: 'partidos',
+				                data: [29, 37, 46, 40, 30, 3, 4, 0, 1]
+					            }]
+					        });
+					    });
+					});
+				</script>
+
+<!-- analytics -->
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-34279624-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+<!-- analytics -->
+</head>
+<body>
+	<div class="wrapper">
+		<div class="header">
+			<a href="/"> <img src="/public/images/header.png"
+				alt="Sigue la Tabla" /> </a>
+		</div>
+
+		<h4>partido con más goles</h4>
+		<p>Atlético Rafaela 5 - 3 Argentinos Juniors (Fecha 9)</p>
+
+		<h4>partidos con más goles de local</h4>
+		<p>Atlético Rafaela 5 - 3 Argentinos Juniors (Fecha 9)</p>
+		<p>River Plate 5 - 0 Godoy Cruz (Fecha 10)</p>
+
+		<h4>partido con más goles de visitante</h4>
+		<p>Arsenal 1 - 5 Vélez Sarsfield (Fecha 13)</p>
+
+		<h4>mayor goleada</h4>
+		<p>River Plate 5 - 0 Godoy Cruz (Fecha 10)</p>
+
+		<h4>equipo más goleador</h4>
+		<p><strong>Vélez Sarsfield</strong> - 31 goles</p>
+
+		<h4>equipo menos goleador</h4>
+		<p><strong>Godoy Cruz</strong> - 13 goles</p>
+
+		<h4>equipo más goleador de local</h4>
+		<p><strong>Boca Juniors</strong> - 18 goles anotados de local</p>
+
+		<h4>equipos menos goleador de local</h4>
+		<p><strong>Godoy Cruz</strong> - 8 goles anotados de local</p>
+		<p><strong>Belgrano</strong> - 8 goles anotados de local</p>
+
+		<h4>equipo más goleador de visitante</h4>
+		<p><strong>Vélez Sarsfield</strong> - 17 goles anotados de visitante</p>
+
+		<h4>equipos menos goleadores de visitante</h4>
+		<p><strong>Atlético Rafela</strong> - 5 goles anotados de local</p>
+		<p><strong>Unión</strong> - 5 goles anotados de local</p>
+		<p><strong>Godoy Cruz</strong> - 5 goles anotados de local</p>
+
+		<h4>equipos más goleados de local</h4>
+		<p><strong>Argentinos Jrs.</strong> - 15 goles recibidos de local</p>
+		<p><strong>Unión</strong> - 15 goles recibidos local</p>
+
+		<h4>equipos menos goleados de local</h4>
+		<p><strong>Belgrano</strong> - 3 goles recibidos de local</p>
+		<p><strong>Newell's</strong> - 3 goles recibidos local</p>
+
+		<h4>equipos más goleados de visitante</h4>
+		<p><strong>Godoy Cruz</strong> - 20 goles recibidos de visitante</p>
+
+		<h4>equipos menos goleados de visitante</h4>
+		<p><strong>Vélez Sarsfield</strong> - 3 goles recibidos de visitante</p>
+
+		<h4>equipo más goleado</h4>
+		<p><strong>Unión</strong> - 33 goles</p>
+
+		<h4>equipo menos goleado</h4>
+		<p><strong>Lanús</strong> - 10 goles recibidos</p>
+
+		<h4>goles por partido</h4>
+		<div id="goles_por_partido"></div>
+
+		<h4>fecha con más goles</h4>
+		<table class="table table-condensed" style="width: 250px">
+			<caption>
+				<strong>Fecha 9 - 33 goles</strong>
+			</caption>
+			<tbody>
+				<tr class="warning">
+					<td>Quilmes</td>
+					<td>1</td>
+					<td>1</td>
+					<td>Belgrano</td>
+				</tr>
+				<tr class="success">
+					<td>All Boys</td>
+					<td>2</td>
+					<td>1</td>
+					<td>Lanús</td>
+				</tr>
+				<tr class="success">
+					<td>Godoy Cruz</td>
+					<td>1</td>
+					<td>0</td>
+					<td>Estudiantes</td>
+				</tr>
+				<tr class="success">
+					<td>Rafaela</td>
+					<td>5</td>
+					<td>3</td>
+					<td>Argentinos Jrs.</td>
+				</tr>
+				<tr class="success">
+					<td>Racing</td>
+					<td>4</td>
+					<td>0</td>
+					<td>San Lorenzo</td>
+				</tr>
+				<tr class="error">
+					<td>Arsenal</td>
+					<td>0</td>
+					<td>4</td>
+					<td>River Plate</td>
+				</tr>
+				<tr class="warning">
+					<td>Tigre</td>
+					<td>0</td>
+					<td>0</td>
+					<td>Newell's</td>
+				</tr>
+				<tr class="error">
+					<td>Vélez</td>
+					<td>2</td>
+					<td>4</td>
+					<td>Colón</td>
+				</tr>
+				<tr class="error">
+					<td>Unión</td>
+					<td>1</td>
+					<td>2</td>
+					<td>Independiente</td>
+				</tr>
+				<tr class="warning">
+					<td>Boca</td>
+					<td>1</td>
+					<td>1</td>
+					<td>San Martín</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<h4>fecha con menos goles</h4>
+		<table class="table table-condensed" style="width: 250px">
+			<caption>
+				<strong>Fecha 2 - 11 goles</strong>
+			</caption>
+			<tbody>
+				<tr class="error">
+					<td>San Martín</td>
+					<td>0</td>
+					<td>1</td>
+					<td>Colón</td>
+				</tr>
+				<tr class="error">
+					<td>Lanús</td>
+					<td>0</td>
+					<td>1</td>
+					<td>Newell's</td>
+				</tr>
+				<tr class="error">
+					<td>Estudiantes</td>
+					<td>0</td>
+					<td>2</td>
+					<td>River Plate</td>
+				</tr>
+				<tr class="warning">
+					<td>Belgrano</td>
+					<td>0</td>
+					<td>0</td>
+					<td>San Lorenzo</td>
+				</tr>
+				<tr class="warning">
+					<td>All Boys</td>
+					<td>1</td>
+					<td>1</td>
+					<td>Quilmes</td>
+				</tr>
+				<tr class="error">
+					<td>Argentinos Jrs.</td>
+					<td>0</td>
+					<td>2</td>
+					<td>Racing</td>
+				</tr>
+				<tr class="error">
+					<td>Unión</td>
+					<td>0</td>
+					<td>1</td>
+					<td>Godoy Cruz</td>
+				</tr>
+				<tr class="success">
+					<td>Boca</td>
+					<td>2</td>
+					<td>0</td>
+					<td>Tigre</td>
+				</tr>
+				<tr class="warning">
+					<td>Rafaela</td>
+					<td>0</td>
+					<td>0</td>
+					<td>Arsenal</td>
+				</tr>
+				<tr class="warning">
+					<td>Independiente</td>
+					<td>0</td>
+					<td>0</td>
+					<td>Vélez</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<h4>fecha con más victorias de local</h4>
+		<table class="table table-condensed" style="width: 250px">
+			<caption>
+				<strong>Fecha 18 - 9 victorias de local</strong>
+			</caption>
+			<tbody>
+				<tr class="warning">
+					<td>Godoy Cruz</td>
+					<td>0</td>
+					<td>0</td>
+					<td>Quilmes</td>
+				</tr>
+				<tr class="success">
+					<td>Colón</td>
+					<td>3</td>
+					<td>1</td>
+					<td>Argentinos Jrs.</td>
+				</tr>
+				<tr class="success">
+					<td>Racing</td>
+					<td>3</td>
+					<td>1</td>
+					<td>All Boys</td>
+				</tr>
+				<tr class="success">
+					<td>Vélez</td>
+					<td>2</td>
+					<td>0</td>
+					<td>Unión</td>
+				</tr>
+				<tr class="success">
+					<td>Belgrano</td>
+					<td>1</td>
+					<td>0</td>
+					<td>Tigre</td>
+				</tr>
+				<tr class="success">
+					<td>River Plate</td>
+					<td>1</td>
+					<td>0</td>
+					<td>Lanús</td>
+				</tr>
+				<tr class="success">
+					<td>San Lorenzo</td>
+					<td>2</td>
+					<td>1</td>
+					<td>Independiente</td>
+				</tr>
+				<tr class="success">
+					<td>Arsenal</td>
+					<td>1</td>
+					<td>0</td>
+					<td>Boca</td>
+				</tr>
+				<tr class="success">
+					<td>Newell's</td>
+					<td>3</td>
+					<td>0</td>
+					<td>Rafaela</td>
+				</tr>
+				<tr class="success">
+					<td>Estudiantes</td>
+					<td>2</td>
+					<td>0</td>
+					<td>San Martín</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<h4>fecha con más victorias de visitante</h4>
+		<table class="table table-condensed" style="width: 250px">
+			<caption>
+				<strong>Fecha 2 - 5 victorias de visitante</strong>
+			</caption>
+			<tbody>
+				<tr class="error">
+					<td>San Martín</td>
+					<td>0</td>
+					<td>1</td>
+					<td>Colón</td>
+				</tr>
+				<tr class="error">
+					<td>Lanús</td>
+					<td>0</td>
+					<td>1</td>
+					<td>Newell's</td>
+				</tr>
+				<tr class="error">
+					<td>Estudiantes</td>
+					<td>0</td>
+					<td>2</td>
+					<td>River Plate</td>
+				</tr>
+				<tr class="warning">
+					<td>Belgrano</td>
+					<td>0</td>
+					<td>0</td>
+					<td>San Lorenzo</td>
+				</tr>
+				<tr class="warning">
+					<td>All Boys</td>
+					<td>1</td>
+					<td>1</td>
+					<td>Quilmes</td>
+				</tr>
+				<tr class="error">
+					<td>Argentinos Jrs.</td>
+					<td>0</td>
+					<td>2</td>
+					<td>Racing</td>
+				</tr>
+				<tr class="error">
+					<td>Unión</td>
+					<td>0</td>
+					<td>1</td>
+					<td>Godoy Cruz</td>
+				</tr>
+				<tr class="success">
+					<td>Boca</td>
+					<td>2</td>
+					<td>0</td>
+					<td>Tigre</td>
+				</tr>
+				<tr class="warning">
+					<td>Rafaela</td>
+					<td>0</td>
+					<td>0</td>
+					<td>Arsenal</td>
+				</tr>
+				<tr class="warning">
+					<td>Independiente</td>
+					<td>0</td>
+					<td>0</td>
+					<td>Vélez</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<h4>fecha con más empates</h4>
+		<table class="table table-condensed" style="width: 250px">
+			<caption>
+				<strong>Fecha 13 - 6 empates</strong>
+			</caption>
+			<tbody>
+				<tr class="error">
+					<td>Rafaela</td>
+					<td>1</td>
+					<td>3</td>
+					<td>Belgrano</td>
+				</tr>
+				<tr class="warning">
+					<td>Argentinos Jrs.</td>
+					<td>1</td>
+					<td>1</td>
+					<td>San Martín</td>
+				</tr>
+				<tr class="warning">
+					<td>Unión</td>
+					<td>2</td>
+					<td>2</td>
+					<td>Estudiantes</td>
+				</tr>
+				<tr class="success">
+					<td>Boca</td>
+					<td>3</td>
+					<td>1</td>
+					<td>San Lorenzo</td>
+				</tr>
+				<tr class="error">
+					<td>Arsenal</td>
+					<td>1</td>
+					<td>5</td>
+					<td>Vélez</td>
+				</tr>
+				<tr class="error">
+					<td>Godoy Cruz</td>
+					<td>1</td>
+					<td>2</td>
+					<td>Newell's</td>
+				</tr>
+				<tr class="warning">
+					<td>Quilmes</td>
+					<td>2</td>
+					<td>2</td>
+					<td>Colón</td>
+				</tr>
+				<tr class="warning">
+					<td>All Boys</td>
+					<td>0</td>
+					<td>0</td>
+					<td>River Plate</td>
+				</tr>
+				<tr class="warning">
+					<td>Tigre</td>
+					<td>1</td>
+					<td>1</td>
+					<td>Racing</td>
+				</tr>
+				<tr class="error">
+					<td>Independiente</td>
+					<td>0</td>
+					<td>2</td>
+					<td>Lanús</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<!-- 
+		<div class="footer">
+			<h4>
+				&#9658; &nbsp;
+				<a href="@{Application.contacto}">contacto</a>
+				&nbsp; &#9668;
+			</h4>
+		</div>
+ -->
+	</div>
+</body>
+</html>

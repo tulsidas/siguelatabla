@@ -33,10 +33,6 @@ public class Partido extends Model {
    @ManyToOne
    public Torneo torneo;
 
-   // @Required
-   // @ManyToOne(optional = false)
-   // public Estadio estadio;
-
    public int golesLocal;
 
    public int golesVisitante;

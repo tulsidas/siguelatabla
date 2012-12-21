@@ -57,7 +57,7 @@ public class Partidos extends Controller {
    }
 
    public static void doAlta(@Required Long torneoId, @Required Date cuando,
-         @Required Long localId, @Required Long visitanteId, @Required Integer fecha/* TODO estadio*/) {
+         @Required Long localId, @Required Long visitanteId, @Required Integer fecha) {
 
       Equipo local = Equipo.findById(localId);
       Equipo visitante = Equipo.findById(visitanteId);
@@ -86,7 +86,6 @@ public class Partidos extends Controller {
       p.visitante = visitante;
       p.torneo = torneo;
       p.fecha = fecha;
-      // TODO estadio
       p.golesLocal = 0;
       p.golesVisitante = 0;
       p.confirmado = false;
@@ -155,7 +154,7 @@ public class Partidos extends Controller {
          torneo.fecha = torneo.fecha + 1;
          torneo.save();
       }
-      
+
       flash.put("msg", "cambios guardados");
 
       confirmar(torneoId, fecha);
